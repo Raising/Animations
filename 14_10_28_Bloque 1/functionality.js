@@ -19,7 +19,14 @@ $(document).ready(function() {
 	ARM.hangingImage("img/landscape_training.jpg","test",5,200,200);
 */
 
-	ARM.recursivetest("side3d",5,400,300,50);
+
+//	ARM.recursivetest("side3d",5,400,300,5);
+
+
+ARM.timeline(ARM.tonelVerticalElastico("side3d",5,400,300),
+	ARM.hangingImage("img/landscape_training.jpg","test",5,200,200,",'-=2'")
+
+	);
 
 });
 

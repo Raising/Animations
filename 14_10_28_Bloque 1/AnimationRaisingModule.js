@@ -7,6 +7,19 @@ var ARM = {version:"1"};
 
 
 
+ARM.timeline = function (/* .... */){
+
+	var tl = new TimelineLite();
+	var executor = "tl";
+	for(var i = 0; i < arguments.length; i++){
+		executor= executor.concat(arguments[i]);	 
+	}
+	executor = executor.concat(";");	 
+	console.log(executor);
+	eval(executor);
+}
+
+
 ARM.clipedImageColumToSide = function(imagePath,duration,sizeH,sizeV,columWidth,direction){//
 
  //ease:Circ.easeInOut}
@@ -68,64 +81,38 @@ ARM.clipedImageColumToSide = function(imagePath,duration,sizeH,sizeV,columWidth,
 } 
 
 
-ARM.hangingImage = function(imagePath,targetImg,duration,sizeH,sizeV){
+ARM.hangingImage = function(imagePath,targetImg,duration,sizeH,sizeV,aditionalArgs){
 
+	aditionalArgs = aditionalArgs || "";
+	var image = $('#'+targetImg);
 
-	var image = $('#'+targetImg);//
-
-TweenLite.set(image, {transformPerspective:800});
-	var onloadHandler = function () {
-		
-		TweenMax.fromTo	(image, duration, {rotationX:-90, transformOrigin:"left top"},{rotationX:0, transformOrigin:"left top",ease:Elastic.easeOut });
-    }
+	TweenLite.set(image, {transformPerspective:800});
 
 	image.css({position:"relative",
 		width:sizeH+"px",
 		height:sizeV+"px",
 		left:"100px",
-		top:"100px",
-		transform: "rotateY(10deg)"
+		top:"10px",
+		transform: "rotateY(15deg)"
 		
 		});
 		
 
 	
-	image.load(onloadHandler);
+	//image.load(onloadHandler);
 	image.attr('src', imagePath);
+	return('.from($("#'+targetImg+'"),'+duration+', {rotationX:-90,autoAlpha:0, transformOrigin:"50% top",ease:Elastic.easeOut }'+aditionalArgs+')');
 
 }
 
-ARM.tonelVerticalElastico = function(targetDiv,duration,sizeH,sizeV){
-
-	var animatedDiv = $('#'+targetDiv);
-TweenLite.set(animatedDiv, {transformPerspective:800});
-	var onloadHandler = function () {
-		
-		TweenMax.fromTo	(animatedDiv, duration, {rotationY:90, transformOrigin:"left 50% -400"},{rotationY:0, transformOrigin:"left 50% -200",ease:Elastic.easeOut });
-    }
-
-
-	animatedDiv.css({position:"relative",
-		width:sizeH+"px",
-		height:sizeV+"px",
-		left:"100px",
-		top:"100px"
-		});
-		
-	//animatedDiv.load(onloadHandler);
-	onloadHandler();
-}
-
-ARM.tonelVertical = function(targetDiv,duration,sizeH,sizeV){
-
+ARM.tonelVerticalElastico = function(targetDiv,duration,sizeH,sizeV,aditionalArgs){
+	aditionalArgs = aditionalArgs || "";
 	var animatedDiv = $('#'+targetDiv);
 	TweenLite.set(animatedDiv, {transformPerspective:800});
-	var onloadHandler = function () {
-	
-		TweenMax.fromTo	(animatedDiv, duration, {rotationY:90, transformOrigin:"50% 50% 0"},{rotationY:0, transformOrigin:"50% 50% -1000",ease:Sine.easeInOut});
-    }
-
-
+	/*var onloadHandler = function () {
+		
+		TweenMax.fromTo	(animatedDiv, duration, {rotationY:90, transformOrigin:"left 50% -400"},{rotationY:0, transformOrigin:"left 50% -200",ease:Elastic.easeOut });
+    }*/
 	animatedDiv.css({position:"relative",
 		width:sizeH+"px",
 		height:sizeV+"px",
@@ -133,19 +120,38 @@ ARM.tonelVertical = function(targetDiv,duration,sizeH,sizeV){
 		top:"100px"
 		});
 		
-	//animatedDiv.load(onloadHandler);
-	onloadHandler();
 	
+	//onloadHandler();
+	return('.fromTo($("#'+targetDiv+'"),'+duration+', {rotationY:90, transformOrigin:"left 50% -400"},{rotationY:0, transformOrigin:"left 50% -200",ease:Elastic.easeOut }'+aditionalArgs+')');
 }
+
+ARM.tonelVertical = function(targetDiv,duration,sizeH,sizeV,aditionalArgs){
+	aditionalArgs = aditionalArgs || "";
+	var animatedDiv = $('#'+targetDiv);
+	TweenLite.set(animatedDiv, {transformPerspective:800});
+	animatedDiv.css({position:"relative",
+		width:sizeH+"px",
+		height:sizeV+"px",
+		left:"100px",
+		top:"100px"
+		});
+	return('.fromTo($("#'+targetDiv+'"), '+duration+', {rotationY:90, transformOrigin:"50% 50% 0"},{rotationY:0, transformOrigin:"50% 50% -1000",ease:Sine.easeInOut}'+aditionalArgs+')');
+}
+
+
+
+
+
+
 
 ARM.recursivetest = function(targetDiv,duration,sizeH,sizeV,number){
 if(number==0){}else{
 	var animatedDiv = $('#'+targetDiv);
 	TweenLite.set(animatedDiv, {transformPerspective:800});
-	var onloadHandler = function () {
+	/*var onloadHandler = function () {
 	
-		TweenMax.fromTo	(animatedDiv, duration, {rotationY:90, transformOrigin:"50% 50% 0"},{rotationY:0, transformOrigin:"50% 50% -1000",ease:Elastic.easeOut});
-    }
+		TweenMax.fromTo	(animatedDiv, duration,{rotationY:90, transformOrigin:"50% 50% 0"},{rotationY:0, transformOrigin:"50% 50% -1000",ease:Sine.easeInOut});
+    }*/
 
 	var randomColor = Math.floor(Math.random()*16777215).toString(16);
 	animatedDiv.css({position:"relative",
