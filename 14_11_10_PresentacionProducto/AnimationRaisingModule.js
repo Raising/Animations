@@ -7,19 +7,6 @@ var ARM = {version:"1"};
 
 
 
-ARM.timeline = function (/* .... */){
-
-	var tl = new TimelineLite();
-	var executor = "tl";
-	for(var i = 0; i < arguments.length; i++){
-		executor= executor.concat(arguments[i]);	 
-	}
-	executor = executor.concat(";");	 
-	console.log(executor);
-	eval(executor);
-}
-
-
 ARM.clipedImageColumToSide = function(imagePath,duration,sizeH,sizeV,columWidth,direction){//
 
  //ease:Circ.easeInOut}
@@ -194,20 +181,12 @@ ARM.tweenHangingImage = function(imagePath,targetImg,duration,sizeH,sizeV,aditio
 	aditionalArgs = aditionalArgs || "";
 	var image = $('#'+targetImg);
 
-	TweenLite.set(image, {transformPerspective:800});
+	//TweenLite.set(image, {transformPerspective:800});
 
 	image.css({position:"relative",
 		width:sizeH+"px",
-		height:sizeV+"px",
-		left:"100px",
-		top:"10px",
-		
-		transform: "rotate(50deg)"
-		
+		height:sizeV+"px",	
 		});
-		
-
-	
 	//image.load(onloadHandler);
 	image.attr('src', imagePath);
 	return(TweenMax.from(image,duration, {rotationX:-90,autoAlpha:0, transformOrigin:"50% top",yoyo:true,repeat: 1,ease:Elastic.easeOut }));
