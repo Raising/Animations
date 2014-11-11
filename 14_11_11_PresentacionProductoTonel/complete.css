@@ -1,0 +1,91 @@
+#main_container{
+	width: 1920px;
+	height: 1080px;
+	perspective:800px;
+}
+
+.background {
+/*	background-image: url( "img/landscape_training.jpg");*/
+	background-color: #DA5;
+	background-repeat: no-repeat;
+}
+.ARM_div {
+	position:absolute;
+}
+
+
+#product_supporter {
+	/*background-color: #AAA;
+*/	width: 600px;
+	height: 850px ;
+	top:100px;
+	left:150px;
+
+}
+
+#productImg{
+	width: 600px;
+	height:850px;
+}
+
+
+#text_suporter {
+	background-color: #AAA;
+	width: 800px;
+	height: 850px ;
+	top:100px;
+	left:900px;
+	opacity:0.8;
+}
+
+
+#descripcion{
+
+margin:50px;
+  font-size:40px;
+  line-height:50px;
+  color:#222;
+}
+
+#precio{
+  position:absolute;
+  bottom:80px;
+  left:100px;
+  font-size:200px;
+  line-height:50px;
+  color:#222;
+}
+
+
+.tonelSide{
+	left:360px;
+	top:140px;
+	width: 1200px;
+	height: 800px;
+	
+	backface-visibility: hidden; 
+}
+
+#tonelSide1{
+	background-color: #AAA;
+}
+#tonelSide2{
+	background-color: #999;
+}
+#tonelSide3{
+	background-color: #888;
+}
+#tonelSide4{
+	background-color: #777;
+}
+#tonelSide5{
+	background-color: #666;
+}
+#tonelSide6{
+	background-color: #555;
+}
+
+
+body {
+
+}
