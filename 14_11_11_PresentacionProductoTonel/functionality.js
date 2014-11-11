@@ -47,7 +47,7 @@ $(document).ready(function() {
 	// .staggerFrom(splitPrecio.chars, 0.8, {scale:0.25, autoAlpha:0,  rotationZ:-880,  transformOrigin:"200% 50% -300", ease:Sine.easeOut}, 0.15)
 	// .add(TweenMax.fromTo($("#productImg"), 1, { rotationY:5}, 	{rotationY:-5,    repeat: -1,    yoyo: true,    ease: Bounce.easeIn}))
 	 ;
-	 tl.timeScale(4);
+	 tl.timeScale(8);
 	 //tl.progress (1);
 	 tl.resume();
 	

@@ -62,7 +62,8 @@ margin:50px;
 	top:140px;
 	width: 1200px;
 	height: 800px;
-	
+		
+-webkit-backface-visibility: hidden;
 	backface-visibility: hidden; 
 }
 
