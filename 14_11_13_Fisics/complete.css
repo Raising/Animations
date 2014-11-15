@@ -6,7 +6,7 @@
 
 .background {
 /*	background-image: url( "img/landscape_training.jpg");*/
-	background-color: #DA5;
+	background-color: #333;
 	background-repeat: no-repeat;
 }
 .ARM_div {
@@ -35,7 +35,7 @@
 	height: 850px ;
 	top:100px;
 	left:900px;
-
+	opacity:0.8;
 }
 
 
@@ -54,6 +54,45 @@ margin:50px;
   font-size:200px;
   line-height:50px;
   color:#222;
+}
+
+#price2{
+  position:absolute;
+  bottom:280px;
+  left:100px;
+  font-size:200px;
+  line-height:50px;
+  color:#222;
+}
+
+
+.tonelSide{
+	left:360px;
+	top:140px;
+	width: 1200px;
+	height: 800px;
+		
+-webkit-backface-visibility: hidden;
+	backface-visibility: hidden; 
+}
+
+#tonelSide1{
+	background-color: #AAA;
+}
+#tonelSide2{
+	background-color: #999;
+}
+#tonelSide3{
+	background-color: #888;
+}
+#tonelSide4{
+	background-color: #777;
+}
+#tonelSide5{
+	background-color: #666;
+}
+#tonelSide6{
+	background-color: #555;
 }
 
 

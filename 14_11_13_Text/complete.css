@@ -1,0 +1,35 @@
+#main_container{
+	width: 1920px;
+	height: 1080px;
+	/*perspective:800px;*/
+}
+
+.background {
+/*	background-image: url( "img/landscape_training.jpg");*/
+	background-color: #9AD;
+	background-repeat: no-repeat;
+}
+.ARM_div {
+	position:absolute;
+}
+
+
+
+
+.text_holder{
+  background-color: #DDD;
+  border: 1px dotted #999;
+  padding: 30px;
+  font-size:40px;
+  line-height:50px;
+  color:#222;
+  width: 576px;
+  height:298px;
+  float:left;
+}
+
+
+
+body {
+
+}
