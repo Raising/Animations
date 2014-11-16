@@ -5,22 +5,33 @@ ARM, Animation Raising Module.
 
 var ARM = {version:"1"};
 
-
-
-
 ARM.Text = {};
+	ARM.Text.In = {};
+	ARM.Text.Mid = {};
+	ARM.Text.Out = {};
+	
+ARM.Group = {};
+	ARM.Group.In = {};
+	ARM.Group.Mid = {};
+	ARM.Group.Out = {};
+
+ARM.Container = {};
+	ARM.Container.In = {};
+	ARM.Container.Mid = {};
+	ARM.Container.Out = {};
+
 
 ARM.clickOnMe = function(element,functionName){
 	$("#"+element).click(function(){functionName(element);} );
 }
 
-ARM.Text.rollChar = function(textContainerID){
+ARM.Text.In.rollChar = function(textContainerID){
 	var splitText = new SplitText( $("#"+textContainerID), {type:"chars"});
 	return TweenMax.staggerFrom(splitText.chars, 1.6, {scale:0, autoAlpha:0,  rotationZ:-360,  transformOrigin:"50% 50% -200", ease:Bounce.easeOut}, 0.05);
 }
 
 
-ARM.Text.flipRightChar = function(textContainerID){
+ARM.Text.In.flipRightChar = function(textContainerID){
 
 	var splitText = new SplitText( $("#"+textContainerID), {type:"chars"});
 	$("#"+textContainerID+" >").css({perspective:"10px"});
@@ -28,27 +39,24 @@ ARM.Text.flipRightChar = function(textContainerID){
 }
 
 
-ARM.Text.flipUPline = function(textContainerID){
+ARM.Text.In.flipUPline = function(textContainerID){
 	$("#"+textContainerID).css({perspective:"100px"});
 	var splitText = new SplitText( $("#"+textContainerID), {type:"lines"});
 	return TweenMax.staggerFrom(splitText.lines, 1.6, { autoAlpha:0,  rotationX:-180,  transformOrigin:"100% 50% -50", ease:Sine.easeOut}, 1);
 }
 
 
-ARM.Text.turnFromBehind = function(textContainerID){
+ARM.Text.In.turnFromBehind = function(textContainerID){
 	$("#"+textContainerID).css({perspective:"100px"});
 	var splitText = new SplitText( $("#"+textContainerID), {type:"chars"});
 	return TweenMax.staggerFrom(splitText.chars, 1.6, { autoAlpha:0,  rotationX:-180,  transformOrigin:"50% 50% -200", ease:Sine.easeOut}, 0.05);
 }
 
 
-ARM.Text.opacityUp = function(textContainerID){
-	var splitText = new SplitText( $("#"+textContainerID), {type:"chars"});
-	return TweenMax.staggerFrom(splitText.chars, 1.6, {autoAlpha:0, ease:Sine.easeOut}, 0.05);
-}
 
 
-ARM.Text.doubleSideAprox = function(textContainerID){
+
+ARM.Text.In.doubleSideAprox = function(textContainerID){
 	var splitText = new SplitText( $("#"+textContainerID), {type:"chars"});
 	var impar = $("#"+textContainerID+">:odd");
 	var par = $("#"+textContainerID+">:even");
@@ -61,7 +69,10 @@ ARM.Text.doubleSideAprox = function(textContainerID){
 
 
 
-
+ARM.Text.In.opacityUp = function(textContainerID){
+	var splitText = new SplitText( $("#"+textContainerID), {type:"chars"});
+	return TweenMax.staggerFrom(splitText.chars, 1.6, {autoAlpha:0, ease:Sine.easeOut}, 0.05);
+}
 
 
 

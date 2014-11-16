@@ -12,6 +12,69 @@ $(document).ready(function() {
 		$(this).parent().children().css({backgroundColor:"darkgreen"});
 		$(this).css({backgroundColor:"lightgreen"});
 	});
+	
+	$(".frame").click(function(){frameSelected = this.id});
+
+
+	
+	for(var fun in ARM.Text.In ){
+		$("<button id='"+fun+"' class='function'>"+fun+"</button>").click(
+				function(auxFun){return function(){	ARM.Text.In[auxFun](frameSelected);	};			
+		}(fun)).appendTo($("#Texto-Entrada"));	
+	}
+
+
+
+	for(var fun in ARM.Text.Mid){
+		$("<button id='"+fun+"' class='function'>"+fun+"</button>").click(
+				function(auxFun){return function(){ARM.Text.Mid[auxFun](frameSelected);	};			
+		}(fun)).appendTo($("#Texto-Mantenido"));	
+
+	}
+	for(var fun in ARM.Text.Out){
+		$("<button id='"+fun+"' class='function'>"+fun+"</button>").click(
+				function(auxFun){return function(){	ARM.Text.Out[auxFun](frameSelected);	};			
+		}(fun)).appendTo($("#Texto-Salida"));		
+
+	}
+	for(var fun in ARM.Group.In ){
+		$("<button id='"+fun+"' class='function'>"+fun+"</button>").click(
+				function(auxFun){return function(){	ARM.Group.In[auxFun](frameSelected);	};			
+		}(fun)).appendTo($("#Grupal-Entrada"));	
+
+	}
+	for(var fun in ARM.Group.Mid ){
+		$("<button id='"+fun+"' class='function'>"+fun+"</button>").click(
+				function(auxFun){return function(){	ARM.Group.Mid[auxFun](frameSelected);	};			
+		}(fun)).appendTo($("#Grupal-Mantenimiento"));	
+
+	}
+	for(var fun in ARM.Group.Out ){
+		$("<button id='"+fun+"' class='function'>"+fun+"</button>").click(
+				function(auxFun){return function(){	ARM.Group.Out[auxFun](frameSelected);	};			
+		}(fun)).appendTo($("#Grupal-Salida"));	
+
+	}
+	for(var fun in ARM.Container.In ){
+		$("<button id='"+fun+"' class='function'>"+fun+"</button>").click(
+				function(auxFun){return function(){	ARM.Container.In[auxFun](frameSelected);	};			
+		}(fun)).appendTo($("#Contenedor-Entrada"));	
+
+	}
+	for(var fun in ARM.Container.Mid ){
+		$("<button id='"+fun+"' class='function'>"+fun+"</button>").click(
+				function(auxFun){return function(){	ARM.Container.Mid[auxFun](frameSelected);	};			
+		}(fun)).appendTo($("#Contenedor-Mantenimiento"));	
+
+	}
+	for(var fun in ARM.Container.Out ){
+		$("<button id='"+fun+"' class='function'>"+fun+"</button>").click(
+				function(auxFun){return function(){	ARM.Container.Out[auxFun](frameSelected);	};			
+		}(fun)).appendTo($("#Contenedor-Salida"));	
+
+	}
+
+
 
 
 

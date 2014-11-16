@@ -26,15 +26,29 @@
   background-color: lightgreen;
 }
 
+.functionHolder{
+  position: absolute;
+  background-color: RGBA(200,200,200,0.2);
+  padding: 20px;
+  top:140px;
+  left:10px;
+  width: 520px;
+  height: 850px;
+  border-radius: 20px;
+
+}
+
 .function{
   background-color: #DDD;
   border: 1px dotted #999;
-  padding: 10px;
-  font-size:30px;
-  line-height:40px;
+  padding: 5px;
+  font-size:25px;
+  line-height:30px;
   color:#222;
-  width: 250px;
-  height:52px;
+  width: 48%;
+  height:40px;
+  border-radius: 25px;
+  margin: 5px;
 }
 
 .function:hover{
