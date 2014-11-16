@@ -3,6 +3,16 @@
 
 $(document).ready(function() {
 
+	var frameSelected = "frameTop";
+
+	$("#buttonTexto").css({backgroundColor:"lightgreen"});
+	$("#buttonEntrada").css({backgroundColor:"lightgreen"});
+
+	$(".botonSelector").click(function(){
+		$(this).parent().children().css({backgroundColor:"darkgreen"});
+		$(this).css({backgroundColor:"lightgreen"});
+	});
+
 
 
 	ARM.clickOnMe("texto1",ARM.Text.opacityUp);
