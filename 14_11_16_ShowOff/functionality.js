@@ -4,15 +4,37 @@
 $(document).ready(function() {
 
 	var frameSelected = "frameTop";
+	var kindSelected = "Texto";
+	var flowSelected = "Entrada";
 
-	$("#buttonTexto").css({backgroundColor:"lightgreen"});
-	$("#buttonEntrada").css({backgroundColor:"lightgreen"});
+	$("#buttonTexto").addClass("botonActive");
+	$("#buttonEntrada").addClass("botonActive");
 
 	$(".botonSelector").click(function(){
-		$(this).parent().children().css({backgroundColor:"darkgreen"});
-		$(this).css({backgroundColor:"lightgreen"});
+
+		if ($(this).parent().id == "kind"){
+
+			kindSelected = String($(this).attr("id")).substring(6);
+		}else{
+			flowSelected = String($(this).attr("id")).substring(6);
+		}
+
+		$(this).parent().children().removeClass("botonActive");
+		$(this).addClass("botonActive");
+		console.log(kindSelected,flowSelected);
+
+
+		var functionHolders = $(".functionHolder");
+		console.log("#"+kindSelected+"-"+flowSelected);
+		var actualHolder = $("#"+kindSelected+"-"+flowSelected);
+		var tlb = new  TimelineMax()
+		.to(functionHolders,1,{rotationY:-60,transformOrigin:"0% 0%",ease:Sine.easeOut})
+		.to(actualHolder,2,{rotationY:0,transformOrigin:"0% 0%",ease:Sine.easeOut});
 	});
 	
+
+
+
 	$(".frame").click(function(){frameSelected = this.id});
 
 
@@ -33,7 +55,7 @@ $(document).ready(function() {
 	}
 	for(var fun in ARM.Text.Out){
 		$("<button id='"+fun+"' class='function'>"+fun+"</button>").click(
-				function(auxFun){return function(){	ARM.Text.Out[auxFun](frameSelected);	};			
+				function(auxFun){return function(){	ARM.Text.Out[auxFun](frameSelected);};			
 		}(fun)).appendTo($("#Texto-Salida"));		
 
 	}
