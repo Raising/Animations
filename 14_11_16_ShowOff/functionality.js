@@ -7,12 +7,22 @@ $(document).ready(function() {
 	var kindSelected = "Texto";
 	var flowSelected = "Entrada";
 
+	var actualiceFunctionFrame= function(actualFrame){
+		var functionHolders = $(".functionHolder");
+		var actualHolder = $("#"+actualFrame);
+		var tlb = new  TimelineMax()
+		.to(functionHolders,1,{rotationY:-60,transformOrigin:"-30% 0%",ease:Sine.easeOut})
+		.to(actualHolder,1,{rotationY:0,transformOrigin:"-30% 0%",ease:Sine.easeOut},"-=0.3");
+	}
+
+	actualiceFunctionFrame("Texto-Entrada");
+
 	$("#buttonTexto").addClass("botonActive");
 	$("#buttonEntrada").addClass("botonActive");
 
 	$(".botonSelector").click(function(){
 
-		if ($(this).parent().id == "kind"){
+		if ($(this).parent().attr("id") == "kind"){
 
 			kindSelected = String($(this).attr("id")).substring(6);
 		}else{
@@ -21,15 +31,7 @@ $(document).ready(function() {
 
 		$(this).parent().children().removeClass("botonActive");
 		$(this).addClass("botonActive");
-		console.log(kindSelected,flowSelected);
-
-
-		var functionHolders = $(".functionHolder");
-		console.log("#"+kindSelected+"-"+flowSelected);
-		var actualHolder = $("#"+kindSelected+"-"+flowSelected);
-		var tlb = new  TimelineMax()
-		.to(functionHolders,1,{rotationY:-60,transformOrigin:"0% 0%",ease:Sine.easeOut})
-		.to(actualHolder,2,{rotationY:0,transformOrigin:"0% 0%",ease:Sine.easeOut});
+		actualiceFunctionFrame(kindSelected+"-"+flowSelected);
 	});
 	
 
