@@ -53,9 +53,6 @@ ARM.Text.In.turnFromBehind = function(textContainerID){
 }
 
 
-
-
-
 ARM.Text.In.doubleSideAprox = function(textContainerID){
 	var splitText = new SplitText( $("#"+textContainerID), {type:"chars"});
 	var impar = $("#"+textContainerID+">:odd");
@@ -65,8 +62,6 @@ ARM.Text.In.doubleSideAprox = function(textContainerID){
 	ds.add(TweenMax.staggerFrom(par, 2, {left:50,autoAlpha:0, ease:Sine.easeOut}, 0.01),0);
 	return ds; 
 }
-
-
 
 
 ARM.Text.In.opacityUp = function(textContainerID){
@@ -81,9 +76,28 @@ ARM.Text.In.opacityUp = function(textContainerID){
 
 
 
+ARM.Container.In.hangingFromTop = function(containerID){
+	return TweenMax.from($('#'+containerID), 3, {autoAlpha:0,rotationX:-150,transformOrigin:"50% 0% 0", ease:Elastic.easeOut});
+}
+ARM.Container.In.hangingFromBottom = function(containerID){
+	return TweenMax.from($('#'+containerID), 3, {autoAlpha:0,rotationX:150,transformOrigin:"50% 100% 0", ease:Elastic.easeOut});
+}
+
+ARM.Container.In.hangingFromLeft = function(containerID){
+	return TweenMax.from($('#'+containerID), 3, {autoAlpha:0,rotationY:-150,transformOrigin:"0% 50% 0", ease:Elastic.easeOut});
+}
+ARM.Container.In.hangingFromRight = function(containerID){
+	return TweenMax.from($('#'+containerID), 3, {autoAlpha:0,rotationY:-150,transformOrigin:"100% 50% 0", ease:Elastic.easeOut});
+}
 
 
-
+ARM.Container.In.haltLeft = function(containerID){
+	var tbl = new TimelineMax();
+	tbl.from($('#'+containerID),0.7, {autoAlpha:0,x:-500, ease:Cubic.easeIn})
+	.to($('#'+containerID),0.7, {rotationZ:50,transformOrigin:"100% 100% 0", ease:Cubic.easeOut})
+	.to($('#'+containerID),1, {rotationZ:0,transformOrigin:"100% 100% 0", ease:Bounce.easeOut});
+	return tbl;
+}
 
 
 
