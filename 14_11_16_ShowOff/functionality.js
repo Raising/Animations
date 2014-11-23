@@ -70,7 +70,7 @@ $(document).ready(function() {
 	for(var fun in ARM.Group.Mid ){
 		$("<button id='"+fun+"' class='function'>"+fun+"</button>").click(
 				function(auxFun){return function(){	ARM.Group.Mid[auxFun](frameSelected);	};			
-		}(fun)).appendTo($("#Grupal-Mantenimiento"));	
+		}(fun)).appendTo($("#Grupal-Mantenido"));	
 
 	}
 	for(var fun in ARM.Group.Out ){
@@ -86,9 +86,10 @@ $(document).ready(function() {
 
 	}
 	for(var fun in ARM.Container.Mid ){
+		console.log(fun);
 		$("<button id='"+fun+"' class='function'>"+fun+"</button>").click(
 				function(auxFun){return function(){	ARM.Container.Mid[auxFun](frameSelected);	};			
-		}(fun)).appendTo($("#Contenedor-Mantenimiento"));	
+		}(fun)).appendTo($("#Contenedor-Mantenido"));	
 
 	}
 	for(var fun in ARM.Container.Out ){

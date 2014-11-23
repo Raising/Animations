@@ -91,7 +91,7 @@ ARM.Container.In.hangingFromRight = function(containerID){
 }
 
 
-ARM.Container.In.haltLeft = function(containerID){
+ARM.Container.In.haltLeftBounce = function(containerID){
 	var tbl = new TimelineMax();
 	tbl.from($('#'+containerID),0.7, {autoAlpha:0,x:-500, ease:Cubic.easeIn})
 	.to($('#'+containerID),0.7, {rotationZ:50,transformOrigin:"100% 100% 0", ease:Cubic.easeOut})
@@ -99,12 +99,43 @@ ARM.Container.In.haltLeft = function(containerID){
 	return tbl;
 }
 
+ARM.Container.In.haltLeftSkew = function(containerID){
+	var tbl = new TimelineMax();
+	tbl.from($('#'+containerID),0.7, {autoAlpha:0,x:-1000, ease:Cubic.easeIn})
+	.to($('#'+containerID),0.3, {skewX:20,transformOrigin:"100% 100% 0", ease:Cubic.easeOut},"-=0.7")
+	.to($('#'+containerID),0.3, {skewX:-50,transformOrigin:"100% 100% 0", ease:Cubic.easeOut})
+	.to($('#'+containerID),1.5, {skewX:0,transformOrigin:"100% 100% 0", ease:Elastic.easeOut});
+	return tbl;
+}
+
+
+ARM.Container.Mid.slightTurning = function(containerID){
+	var tbl = new TimelineMax();
+	tbl.fromTo($('#'+containerID),1, {rotationX:-10,transformOrigin:"50% 50% 0", ease:Sine.easeInOut}, {rotationX:10,repeat:-1,yoyo:true,transformOrigin:"50% 50% 0", ease:Sine.easeInOut})
+	tbl.fromTo($('#'+containerID),1, {rotationY:-10,transformOrigin:"50% 50% 0", ease:Sine.easeInOut}, {rotationY:10,repeat:-1,yoyo:true,transformOrigin:"50% 50% 0", ease:Sine.easeInOut},0.5);
+	return tbl;
+}
+ARM.Container.Mid.slightCircle = function(containerID){
+	var tbl = new TimelineMax();
+	tbl.fromTo($('#'+containerID),1, {x:-10,transformOrigin:"50% 50% 0", ease:Sine.easeInOut}, {x:10,repeat:-1,yoyo:true,transformOrigin:"50% 50% 0", ease:Sine.easeInOut})
+	tbl.fromTo($('#'+containerID),1, {y:-10,transformOrigin:"50% 50% 0", ease:Sine.easeInOut}, {y:10,repeat:-1,yoyo:true,transformOrigin:"50% 50% 0", ease:Sine.easeInOut},0.5);
+	return tbl;
+}
+
+
+ARM.Container.Mid.hover = function(containerID){
+	var tbl = new TimelineMax();
+	tbl.fromTo($('#'+containerID),0.7, {x:-10,transformOrigin:"50% 50% 0", ease:Sine.easeInOut}, {x:10,repeat:-1,yoyo:true,transformOrigin:"50% 50% 0", ease:Sine.easeInOut})
+	tbl.fromTo($('#'+containerID),1.2, {y:-10,transformOrigin:"50% 50% 0", ease:Sine.easeInOut}, {y:10,repeat:-1,yoyo:true,transformOrigin:"50% 50% 0", ease:Sine.easeInOut},0.5);
+	tbl.fromTo($('#'+containerID),1.3, {scale:1.0,transformOrigin:"50% 50% 0", ease:Sine.easeInOut}, {scale:1.05,repeat:-1,yoyo:true,transformOrigin:"50% 50% 0", ease:Sine.easeInOut},0);
+	return tbl;
+}
 
 
 
-
-
-
+ARM.Container.Out.inverseHanging = function(containerID){
+		return TweenMax.to($('#'+containerID), 3, {autoAlpha:0,rotationX:-120,transformOrigin:"50% 0% 0", ease:Elastic.easeIn});
+}
 
 
 
