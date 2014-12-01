@@ -3,9 +3,10 @@
 
 $(document).ready(function() {
 
-	var ActualInteractior = new EPR.Interactor();
+	var interactor = new EPR.Interactor();
 
-	ActualInteractior.addNewMenu("firstMenu",200,500,ActualInteractior);
+	interactor.addNewMenu("firstMenu","creator",200,500);
+
 });
 
 
