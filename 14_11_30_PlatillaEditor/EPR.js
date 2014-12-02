@@ -20,13 +20,16 @@ EPR.Interactor = function(){
 	}
 
 
-	this.addNewMenu = function(identificador,tipo,width,height){
+	this.addNewMenu = function(identificador,tipo,width,height,posX,posY){
 		switch(tipo){
 			case "creator":
-				var newMenu = new EPR.CreatorMenu(identificador,interactor);
+				var newMenu = new EPR.CreatorMenu(identificador,interactor,posX,posY);
+			break;
+			case "transform":
+				var newMenu = new EPR.TransformMenu(identificador,interactor,posX,posY);
 			break;
 			default:
-				var newMenu = new EPR.Menu(identificador,width,height,interactor);
+				var newMenu = new EPR.Menu(identificador,interactor,width,height,posX,posY);
 			break;
 		}
 			
@@ -38,14 +41,15 @@ EPR.Interactor = function(){
 }
 
 
-EPR.Menu = function(identificador,width,height,interactor){
-
+EPR.Menu = function(identificador,interactor,width,height,posX,posY){
+	console.log(posX,posY);
 	var menu = this;
 	this.interactor = interactor;
 	this.id = identificador;
 	this.width = width;
 	this.height = height;
 	this.mainContainer = $("<div id='"+this.id+"'  class='menuContainer'></div>");
+	TweenMax.to(this.mainContainer,1,{x:posX,y:posY,ease:Sine.easeOut});
 	this.header= $("<div class='menuHeader'  style='width:"+this.width+"px'><b>	"+identificador+"</b></div>"); 
 	this.body=   $("<div class='menuBody'    style='width:"+this.width+"px;height:"+this.height+"px;'> </div>");
 
@@ -53,7 +57,7 @@ EPR.Menu = function(identificador,width,height,interactor){
 	this.minimizeButon.click(function(){menu.minimize();});
 	this.header.prepend(this.minimizeButon);
 
-	this.maximizeButon = $("<button class='headerButon'>|8|</button>");
+	this.maximizeButon = $("<button class='headerButon'>|M|</button>");
 	this.maximizeButon.click(function(){menu.maximize();});
 	
 	
@@ -100,8 +104,9 @@ EPR.Menu = function(identificador,width,height,interactor){
 }
 
 
-EPR.CreatorMenu = function(identificador,interactor){
-	EPR.Menu.call(this,identificador,250,200,interactor);
+EPR.CreatorMenu = function(identificador,interactor,posX,posY){
+	EPR.Menu.call(this,identificador,interactor,250,200,posX,posY);
+	var Cmenu= this;
 	this.addDivButton = $("<button>Nuevo contenedor</button>");
 	$(this.body).append(this.addDivButton);
 	$(this.addDivButton).click(function(){
@@ -109,19 +114,65 @@ EPR.CreatorMenu = function(identificador,interactor){
 		newDiv.insertInTo();
 		newDiv.setBasicInteraction();
 	});
+	this.perspectiveHandler = new TimelineMax({paused:true}).fromTo($("#mainContainer"),10,{perspective:100},{perspective:3000,ease:Linear.easeNone}).progress(0.5);
+	
+
+
+
+    this.perspectiveHandlerSlider = $("<div  class='rotationSlider'></div>").slider({range: false,min: 0,max: 100,step:0.01,
+        slide: function ( event, ui ) {
+        	console.log("perspectiveHandler");
+        	Cmenu.perspectiveHandler.progress( ui.value/100);}});
+    $(this.body).append(this.perspectiveHandlerSlider);
+
+
 }
 
-EPR.transformMenu = function(identificador,interactor){
-	EPR.Menu.call(this,identificador,250,400,interactor);
+EPR.TransformMenu = function(identificador,interactor,posX,posY){
+
+	EPR.Menu.call(this,identificador,interactor,250,400,posX,posY);
+	var Tmenu =this;
+
+	this.resetButton = $("<button>Refrescar</button>");
+	$(this.body).append(this.resetButton);
+
+
+
+
+
+	this.reset = function(){
+
+		$(Tmenu.body).empty().append(Tmenu.resetButton).append(EPR.GLOBALS.selectedContainer.transformControls);
+		$(Tmenu.resetButton).click(Tmenu.reset);
+
+	}
+
+	$(this.resetButton).click(Tmenu.reset);
+
+	
 	//TODO
 }
 
 
 
-EPR.workingDiv = function(){
+EPR.workingDiv = function(name){
 
 	var div = this;
+	this.name = name;
 	this.htmlVersion = $("<div class='workingDiv'></div>");
+
+	this.stats = {
+		rotationX:0,
+		rotationY:0,
+		rotationZ:0,
+		positionX:0,
+		positionY:0,
+		positionZ:0,
+
+		opacitiy:0,
+
+	};
+
 	this.pasiveAnimations = new TimelineMax({paused:true});
 	this.pasiveAnimations.fromTo(this.htmlVersion, 0.7,
 						{boxShadow: "0px 0px 0px 0px rgba(0,255,0,0.3)"}, 
@@ -140,7 +191,57 @@ EPR.workingDiv = function(){
 
 	this.center = $("<div class='controler'  style='left:45%;top:45%'></div>");
 
+	this.rotationX = new TimelineMax({paused:true}).fromTo(this.htmlVersion,10,{rotationX:-180,ease:Linear.easeNone},{rotationX:180,ease:Linear.easeNone}).progress(0.5);
+	this.rotationY = new TimelineMax({paused:true}).fromTo(this.htmlVersion,10,{rotationY:-180,ease:Linear.easeNone},{rotationY:180,ease:Linear.easeNone}).progress(0.5);
+	this.rotationZ = new TimelineMax({paused:true}).fromTo(this.htmlVersion,10,{rotationZ:-180,ease:Linear.easeNone},{rotationZ:180,ease:Linear.easeNone}).progress(0.5);
+	this.positionZ = new TimelineMax({paused:true}).fromTo(this.htmlVersion,10,{z:-500,ease:Linear.easeNone},{z:500,ease:Linear.easeNone}).progress(0.5);
+	
+
+
+
+
+    this.rotationXSlider = $("<div  class='rotationSlider'></div>").slider({range: false,min: 0,max: 360,step:0.01,
+        slide: function ( event, ui ) {div.rotationX.progress( ui.value/360);}});
+    this.rotationYSlider = $("<div  class='rotationSlider'></div>").slider({range: false,min: 0,max: 360,step:0.01,
+        slide: function ( event, ui ) {div.rotationY.progress( ui.value/360);}});
+    this.rotationZSlider = $("<div  class='rotationSlider'></div>").slider({range: false,min: 0,max: 360,step:0.1,
+        slide: function ( event, ui ) {div.rotationZ.progress( ui.value/360);}});
+   
+
+   	this.positionZSlider = $("<div  class='rotationSlider'></div>").slider({range: false,min: 0,max: 100,step:0.1,
+        slide: function ( event, ui ) {div.positionZ.progress( ui.value/100);}});
+   
+
+    this.updateInterfaces= function() {
+    		div.rotationXSlider.slider({range: false,min: 0,max: 360,step:0.1,
+        slide: function ( event, ui ) {div.rotationX.progress( ui.value/360);}});
+   			 div.rotationYSlider.slider({range: false,min: 0,max: 360,step:0.1,
+        slide: function ( event, ui ) {div.rotationY.progress( ui.value/360);}});
+     		div.rotationZSlider.slider({range: false,min: 0,max: 360,step:0.1,
+        slide: function ( event, ui ) {div.rotationZ.progress( ui.value/360);}});
+     		div.positionZSlider.slider({range: false,min: 0,max: 100,step:0.1,
+        slide: function ( event, ui ) {div.positionZ.progress( ui.value/100);}});
+
+       	div.rotationXSlider.slider("value", div.rotationX.progress() *360);
+       	div.rotationYSlider.slider("value", div.rotationY.progress() *360);
+       	div.rotationZSlider.slider("value", div.rotationZ.progress() *360);
+       	div.positionZSlider.slider("value", div.positionZ.progress() *100);
+        }    
+
+    this.updateStats = function(){
+
+
+    }
+
+    this.transformControls = $("<div class='transforControl'></div>");
+    $(this.transformControls).append( this.rotationXSlider).append( this.rotationYSlider).append( this.rotationZSlider).append(this.positionZSlider);
+
+
 	this.select = function (){
+
+		
+     	div.updateInterfaces();
+
 		div.pasiveAnimations.resume();
 		$(div.htmlVersion).append(div.cornerTopLeft);
 		$(div.htmlVersion).append(div.cornerTopRight);
@@ -165,8 +266,6 @@ EPR.workingDiv = function(){
 		$(div.cornerBottomLeft).click(function(){Draggable.create(div.htmlVersion, {	type:"rotation",throwProps:true,zIndexBoost:false,trigger:div.cornerBottomLeft	});	});
 		$(div.cornerTopLeft).click(function(){Draggable.create(div.htmlVersion, {	type:"rotation",throwProps:true,zIndexBoost:false,trigger:div.cornerTopLeft	});	});
 		$(div.cornerTopRight).click(function(){Draggable.create(div.htmlVersion, {	type:"rotation",throwProps:true,zIndexBoost:false,trigger:div.cornerTopRight	});	});
-
-
 	}
 
 

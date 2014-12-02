@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html style="height: 1080px; width: 1920px; overflow: hidden;" lang="es"><head> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link type="text/css" rel="stylesheet" media="all" href="nochevieja_files/font.css">
+      	<script src="nochevieja_files/jquery.js" charset="utf-8"></script>
+        <script src="nochevieja_files/rescale.js" charset="utf-8"></script>
+
+<style>
+#fondo {
+    position:fixed;
+    top:0px;
+    left:0px;
+    width: 1920px;
+    height: 1080px;
+    z-index: 10;
+}
+
+#titulo {
+      position:absolute;
+      top:44px;
+      left:50px;
+      width: 620px;
+      height: 90px;
+      font-size: 90px; 
+      overflow:hidden;
+      font-family: albertus;
+      text-transform: uppercase;
+      white-space: pre-line;
+      color: #000000;
+      text-align: left;  
+      margin:0;
+      padding:0;      
+      z-index: 13;
+}
+
+#descripcion {
+       position:absolute;
+       top:208px;
+       left: 50px;
+       width:810px;
+       height: 840px;
+       overflow:hidden;
+       font-size: 40px;         
+       font-family: albertus;
+       /*text-transform: uppercase;*/
+       white-space: pre-line;
+       text-align: left;
+       color: #000000;       
+       vertical-align: text-bottom; 
+       margin:0;
+       padding:5px;
+       z-index: 11;
+}
+
+#precio {
+      position:absolute;
+      top:74px;
+      left:670px;
+      width: 200px;
+      height: 60px;
+      font-size: 60px; 
+      overflow:hidden;
+      font-family: albertus;
+      text-transform: uppercase;
+      white-space: pre-line;
+      color: #000000;
+      text-align: center;  
+      margin:0;
+      padding:0;      
+      z-index: 13;
+}
+
+  #platoArriba {
+      position:absolute;
+      top:54px;
+      left:936px;
+      width: 924px;
+      height: 460px;
+      padding:0;  
+      margin-left: auto;
+      margin-right: auto;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center ; 
+      z-index: 12;
+}
+
+  #platoAbajo {
+      position:absolute;
+      top:562px;
+      left:936px;
+      width: 924px;
+      height: 460px;
+      padding:0;  
+      margin-left: auto;
+      margin-right: auto;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;  
+      vertical-align: center;
+      z-index: 12;
+
+    }
+
+  #sombraArriba {
+      position:absolute;
+      top:54px;
+      left:936px;
+      width: 947px;
+      height: 481px;
+      padding:0;  
+      margin-left: auto;
+      margin-right: auto;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center ; 
+      z-index: 11;
+}
+
+  #sombraAbajo {
+      position:absolute;
+      top:562px;
+      left:936px;
+      width: 947px;
+      height: 481px;
+      padding:0;  
+      margin-left: auto;
+      margin-right: auto;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;  
+      vertical-align: center;
+      z-index: 11;
+
+    }
+
+</style>
+<script type="text/javascript">
+
+var config = {
+	width: 1920,
+	height: 1080,
+	adjust: true,
+	perspective: 1000
+};
+
+
+var fondos = ["images/cnaranja.png","images/crojo.png","images/cverdeclaro.png"];
+
+
+var getfondo = function () {
+       return fondos[(parseInt(Math.random()*10))%3];
+};
+
+
+$(document).ready(function () {
+
+
+var descripcion = '<xhtml:div style="text-align: center;"><xhtml:div style="text-align: center;"><xhtml:small><xhtml:span style="font-style: italic;"><xhtml:small>Copa de bienvenida (21.00 horas)</xhtml:small></xhtml:span></xhtml:small><xhtml:br/><xhtml:small><xhtml:span style="font-style: italic;"><xhtml:small>Cena (21.30 horas)</xhtml:small></xhtml:span></xhtml:small><xhtml:br/><xhtml:small><xhtml:span style="font-style: italic;"></xhtml:span></xhtml:small><xhtml:br/><xhtml:small><xhtml:span style="font-style: italic;"></xhtml:span><xhtml:span style="font-weight: bold;">Snack: </xhtml:span>Polvorón de ibérico</xhtml:small><xhtml:br/><xhtml:small>Dumplings de sepia en su tinta</xhtml:small><xhtml:br/><xhtml:small>Copito de queso de cabra y mango </xhtml:small><xhtml:br/><xhtml:br/><xhtml:small><xhtml:span style="font-weight: bold;">Aperitivos</xhtml:span>: Falso capuccino asiático</xhtml:small><xhtml:br/></xhtml:div><xhtml:div style="text-align: center;"><xhtml:div><xhtml:small>Ravioli de pez mantequilla con miso<xhtml:br/><xhtml:span style="text-decoration: underline;"><xhtml:span style="font-weight: bold;"></xhtml:span></xhtml:span><xhtml:br/></xhtml:small></xhtml:div><xhtml:small><xhtml:span style="text-decoration: underline;"><xhtml:span style="font-weight: bold;"></xhtml:span></xhtml:span></xhtml:small></xhtml:div><xhtml:div style="text-align: center;"><xhtml:small><xhtml:span style="font-weight: bold;">Entrante</xhtml:span>: Cebiche de moluscos y marisco con velo de cilantro</xhtml:small><xhtml:br/><xhtml:small><xhtml:span style="font-weight: bold;">Pescado</xhtml:span>: Raya en su jugo con sésamo negro y tirabeques</xhtml:small><xhtml:br/><xhtml:small><xhtml:span style="font-weight: bold;"><xhtml:span style="text-decoration: underline;"></xhtml:span>Carne</xhtml:span>: Costilla de angus con risotto de trigo y setas</xhtml:small><xhtml:br/><xhtml:small><xhtml:span style="font-weight: bold;">Postre:</xhtml:span> Bola de Navidad</xhtml:small><xhtml:br/></xhtml:div><xhtml:small><xhtml:br/><xhtml:span style="font-style: italic;"><xhtml:small>Bebidas: Agua, refrescos, cerveza, Ribera del Duero, Rioja Crianza</xhtml:small><xhtml:small><xhtml:br/>Uvas de la suerte, cava, bolsa de Nochevieja</xhtml:small></xhtml:span><xhtml:br/></xhtml:small></xhtml:div>';
+var titulo ='NOCHEVIEJA';
+var precio ='70';
+var platoArriba ='15956.jpg';
+var platoAbajo ='15957.jpg';
+
+
+
+$("#descripcion").append(descripcion.replace(/xhtml\:/g,""));
+$("#titulo").append(titulo.replace(/xhtml\:/g,""));
+$("#precio").append((precio+"€").replace(/xhtml\:/g,""));
+
+$("#fondo").css("background-image","url('"+getfondo()+"')");
+$("#platoArriba").css("background-image","url('"+platoArriba+"')");
+$("#platoAbajo").css("background-image","url('"+platoAbajo+"')");
+$("#sombraArriba").css("background-image","url('images/sombra.png')");
+$("#sombraAbajo").css("background-image","url('images/sombra.png')");
+
+});
+
+</script>
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1, user-scalable=no"></head>
+<body style="position: absolute; transform-origin: left top 0px; transition: all 0s ease-in-out 0s; transform-style: preserve-3d; width: 1920px; height: 1080px; transform: perspective(1500px) scaleX(0.666667) scaleY(0.851852);">
+	       <div id="main">
+           <img style="background-image: url(&quot;images/cnaranja.png&quot;);" id="fondo">
+           <pre id="titulo">NOCHEVIEJA</pre>
+           <pre id="precio">70€</pre>
+           <pre id="descripcion"> <div style="text-align: center;"><div style="text-align: center;"><small><span style="font-style: italic;"><small>Copa de bienvenida (21.00 horas)</small></span></small><br><small><span style="font-style: italic;"><small>Cena (21.30 horas)</small></span></small><br><small><span style="font-style: italic;"></span></small><br><small><span style="font-style: italic;"></span><span style="font-weight: bold;">Snack: </span>Polvorón de ibérico</small><br><small>Dumplings de sepia en su tinta</small><br><small>Copito de queso de cabra y mango </small><br><br><small><span style="font-weight: bold;">Aperitivos</span>: Falso capuccino asiático</small><br></div><div style="text-align: center;"><div><small>Ravioli de pez mantequilla con miso<br><span style="text-decoration: underline;"><span style="font-weight: bold;"></span></span><br></small></div><small><span style="text-decoration: underline;"><span style="font-weight: bold;"></span></span></small></div><div style="text-align: center;"><small><span style="font-weight: bold;">Entrante</span>: Cebiche de moluscos y marisco con velo de cilantro</small><br><small><span style="font-weight: bold;">Pescado</span>: Raya en su jugo con sésamo negro y tirabeques</small><br><small><span style="font-weight: bold;"><span style="text-decoration: underline;"></span>Carne</span>: Costilla de angus con risotto de trigo y setas</small><br><small><span style="font-weight: bold;">Postre:</span> Bola de Navidad</small><br></div><small><br><span style="font-style: italic;"><small>Bebidas: Agua, refrescos, cerveza, Ribera del Duero, Rioja Crianza</small><small><br>Uvas de la suerte, cava, bolsa de Nochevieja</small></span><br></small></div></pre>
+           <div id="imagenArriba"> 
+              <div style="background-image: url(&quot;images/sombra.png&quot;);" id="sombraArriba"> </div>
+              <div style="background-image: url(&quot;15956.jpg&quot;);" id="platoArriba"> </div>
+           </div>
+           <div id="imagenAbajo"> 
+              <div style="background-image: url(&quot;images/sombra.png&quot;);" id="sombraAbajo"> </div>
+              <div style="background-image: url(&quot;15957.jpg&quot;);" id="platoAbajo"> </div>
+           </div>
+        </div>
+
+
+</body></html>

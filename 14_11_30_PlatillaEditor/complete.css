@@ -1,11 +1,12 @@
-#main_container{
+#mainContainer{
+  position: absolute;
 	width: 1920px;
 	height: 1080px;
 	perspective:800px;
 }
 
 body {
-	background-image: url( "img/landscape_training.jpg");*/
+	background-image: url( "img/landscape_training.jpg");
 	background-color: #9AD;
   width: 1920px;
   height: 1080px;
@@ -31,8 +32,6 @@ b {
 
 .menuContainer{
   position:absolute;
-  left:0px;
-  top:0px;
   width: 0px;
 }
 
@@ -49,14 +48,17 @@ b {
 
 .workingDiv{
   position: absolute;
+  background-image:  url( "img/letraE.jpg");
+  background-size: contain;
   background-color: #666;
-  width: 100px;
-  height: 100px;
-
+  width: 300px;
+  height: 400px;
+left:40%;
+top:40%;
 }
 
 .controler {
-  background-color: white;
+  background-color: RED;
   width: 15px;
   height: 15px;
   position:absolute;
