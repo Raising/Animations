@@ -3,11 +3,14 @@
 	width: 1920px;
 	height: 1080px;
 	perspective:800px;
+  background-color: rgba(255,255,255,0.8);
+  box-shadow: inset 0px 0px 20px 10px orange;
+  overflow: hidden;
 }
 
 body {
-	background-image: url( "img/landscape_training.jpg");
-	background-color: #9AD;
+	/*background-image: url( "img/landscape_training.jpg");*/
+	background-color: #999;
   width: 1920px;
   height: 1080px;
 	background-repeat: no-repeat;
@@ -27,7 +30,8 @@ b {
 
 .menuBody{
   top:20px;
-  background-color:  #313;
+  background-color:  #333;
+  border-radius: 0px 0px 10px 10px;
 }
 
 .menuContainer{
@@ -51,10 +55,7 @@ b {
   background-image:  url( "img/letraE.jpg");
   background-size: contain;
   background-color: #666;
-  width: 300px;
-  height: 400px;
-left:40%;
-top:40%;
+
 }
 
 .controler {
@@ -62,4 +63,236 @@ top:40%;
   width: 15px;
   height: 15px;
   position:absolute;
+}
+
+
+
+.perspectiveSlider{
+  
+  bottom:10px;
+  margin: 10px;
+  margin-top: 50px;
+
+}
+
+.creationForm{
+  padding:10px;
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 18px 0px #000;
+}
+
+.sizeLabel{
+  color:white;
+}
+
+.sizeInput{
+  width: 40px;
+  border-radius: 4px;
+}
+
+.sizeCluster{
+  margin-top: 10px;
+  float:left;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.clearfix{
+  clear: both;
+}
+
+.rotationCluster{
+  float:left;
+  width:32%;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.rotationLabel{
+  margin-top: 10px;
+  color:white;
+}
+
+.rotationSlider{
+  height: 200px !important;
+  margin:10px;
+   margin-top: 10px;
+}
+
+
+.positionSlider{
+  float:left;
+  width: 120px;
+  margin: 5px;
+
+}
+
+.rotationTitle{
+  text-align: center;
+  padding-top: 10px;
+}
+
+.rotationForm{
+  width: 112px;
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 18px 0px #000;
+  float:left;
+}
+
+.rotationResetButton{
+  margin-bottom:10px;
+  width: 92px;
+  border-radius: 10px;
+  height: 25px;
+  margin-left: 10px;
+
+}
+
+.dimensionForm {
+    width: 130px;
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 18px 0px #000;
+  float:left;
+  padding-top: 10px;
+  padding-left: 5px;
+}
+
+.dimensionCluster{
+   width: 120px;
+   margin-top: 5px;
+}
+
+.dimensionInput{
+   width: 35px;
+   margin:0px;
+
+}
+
+.dimensionLabel{
+  color:white;
+ 
+  margin-top:10px;
+  margin-left:5px;
+  margin-right: 15px;
+}
+
+.scaleCluster{
+   width: 120px;
+   margin-top: 5px;
+}
+
+.scaleInput{
+   width: 35px;
+   margin:0px;
+
+}
+
+.scaleLabel{
+  color:white;
+
+  margin-top: 10px;
+  margin-left:5px;
+  margin-right: 26px;
+}
+
+.dimensionApplyButton{
+  margin-bottom:10px;
+  width: 92px;
+  border-radius: 10px;
+  height: 25px;
+  margin-left: 20px;
+  margin-top: 15px;
+}
+
+.durationSlider{
+  position: absolute;
+  width: 80%;
+  left:10%;
+  top:30px;
+}
+
+.playPAuseButton{
+  position: absolute;
+  left:30px;
+  top:55px;
+  width: 50px;
+  height: 25px;
+  border-radius: 5px;
+}
+
+.gotoButton{
+  position: absolute;
+  left:30px;
+  top:25px;
+    width: 50px;
+  height: 25px;
+  border-radius: 5px;
+}
+
+.durationLabel{
+  position: absolute;
+  left: 270px;
+  top:25px;
+   color:white;
+}
+.durationInput{
+ position: absolute;
+  left: 340px;
+  top:25px;
+  width: 40px;
+}
+.positionInput{
+ position: absolute;
+  left: 570px;
+  top:25px;
+  width: 40px;
+}
+.positionLabel{
+
+ position: absolute;
+  left: 500px;
+  top:25px;
+  color:white;
+}
+
+.animationForm {
+  width: 98%;
+  height: 94%;
+  margin-top: 3px;
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 18px 0px #000;
+  float:left;
+  padding-top: 10px;
+  padding-left: 5px;
+}
+
+
+.animationAddButton{
+   position: absolute;
+  left:170px;
+  top:35px;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  color:white;
+  background-color: darkgreen;
+  font-size: 16px;
+  padding-top: 0px;
+}
+
+.animationDeleteButton{
+   position: absolute;
+  left:210px;
+  top:35px;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  color:white;
+  background-color: darkred;
+  font-size: 16px;
+  padding-top: 0px;
 }
