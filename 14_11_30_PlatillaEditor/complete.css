@@ -274,7 +274,7 @@ b {
 .animationAddButton{
    position: absolute;
   left:170px;
-  top:35px;
+  bottom:10px;
   width: 30px;
   height: 30px;
   border-radius: 15px;
@@ -287,7 +287,7 @@ b {
 .animationDeleteButton{
    position: absolute;
   left:210px;
-  top:35px;
+   bottom:10px;
   width: 30px;
   height: 30px;
   border-radius: 15px;
@@ -295,4 +295,76 @@ b {
   background-color: darkred;
   font-size: 16px;
   padding-top: 0px;
+}
+
+
+.baseLine{
+  position: absolute;
+  width: 230px;
+  height: 6px;
+  left:10px;
+  top:7px;
+  background: #b3dced; /* Old browsers */
+background: -moz-linear-gradient(top,  #b3dced 0%, #29b8e5 50%, #bce0ee 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b3dced), color-stop(50%,#29b8e5), color-stop(100%,#bce0ee)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #b3dced 0%,#29b8e5 50%,#bce0ee 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #b3dced 0%,#29b8e5 50%,#bce0ee 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #b3dced 0%,#29b8e5 50%,#bce0ee 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #b3dced 0%,#29b8e5 50%,#bce0ee 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#bce0ee',GradientType=0 ); /* IE6-9 */
+}
+
+.animationContainer{
+  height: 20px;
+  position: relative;
+  background-color: rgba(255,255,255,0.2);
+  box-shadow: inset 0px 0px 18px 0px #000;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.referenceLine{
+  position: absolute;
+  height: 10px;
+  top:6px;
+background: #f0b7a1; /* Old browsers */
+background: -moz-linear-gradient(top,  #f0b7a1 0%, #752201 4%, #ed2f00 82%, #8c3310 90%, #8c3310 93%, #bf6e4e 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f0b7a1), color-stop(4%,#752201), color-stop(82%,#ed2f00), color-stop(90%,#8c3310), color-stop(93%,#8c3310), color-stop(100%,#bf6e4e)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #f0b7a1 0%,#752201 4%,#ed2f00 82%,#8c3310 90%,#8c3310 93%,#bf6e4e 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #f0b7a1 0%,#752201 4%,#ed2f00 82%,#8c3310 90%,#8c3310 93%,#bf6e4e 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #f0b7a1 0%,#752201 4%,#ed2f00 82%,#8c3310 90%,#8c3310 93%,#bf6e4e 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #f0b7a1 0%,#752201 4%,#ed2f00 82%,#8c3310 90%,#8c3310 93%,#bf6e4e 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0b7a1', endColorstr='#bf6e4e',GradientType=0 ); /* IE6-9 */
+ }
+.animationInput{
+  width: 90px;
+  border-radius: 5px;
+  height: 20px;
+}
+
+.AnimationTransformContainer{
+  text-align: center;
+   background-color: rgba(255,255,255,0.2);
+   box-shadow: inset 0px 0px 18px 0px #000;
+   border-radius: 10px;
+  color: white
+}
+
+.animationButton{
+  width: 90px;
+  height: 20px;
+  border-radius: 5px;
+  color: white;
+  background-color: darkred;
+}
+
+.animationRow{
+  height: 35px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.animationSelected{
+  box-shadow: inset 0px 0px 8px 6px darkblue;
 }

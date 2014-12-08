@@ -6,7 +6,6 @@ EPR.GLOBALS.selectedContainer = {};
 EPR.GLOBALS.maxDuration = 10;
 EPR.GLOBALS.selectedAnimation = {};
 
-
 EPR.Interactor = function(){
 
 	var interactor = this;
@@ -62,9 +61,8 @@ EPR.Interactor = function(){
 
 	this.selectAnimation = function(animationSelected){
 		if (animationSelected === EPR.GLOBALS.selectedAnimation){}else{
-				if(EPR.GLOBALS.selectedAnimation.HTMLversion){EPR.GLOBALS.selectedAnimation.HTMLversion.removeClass("animationSelected");}
 				EPR.GLOBALS.selectedAnimation = animationSelected;
-				EPR.GLOBALS.selectedAnimation.HTMLversion.addClass("animationSelected");
+			
 				interactor.AnimationTransform.reset();
 		}
 	}
@@ -238,7 +236,7 @@ EPR.AnimationSelectorMenu = function(identificador,interactor,posX,posY){
 	}
 }
 
-EPR.Animation = function(divAnimated){
+EPR.AnimationTraslation = function(divAnimated){
 	var animation = this;
 	this.stats = {};
 	this.stats.target = divAnimated;
@@ -261,11 +259,12 @@ EPR.Animation = function(divAnimated){
 	this.getHTML = function(){
 		TweenMax.to(animation.timeReference,0.5,{width:(animation.stats.duration/EPR.GLOBALS.maxDuration)*220,x:15+(220/EPR.GLOBALS.maxDuration)*animation.stats.startTime});
 		$(this.HTMLversion).append(this.baseLine).append(this.timeReference);
-	
-		 animation.HTMLversion.click(function(){
-			EPR.GLOBALS.interactor.selectAnimation(animation);
-		 });
-
+	/*	$(this.HTMLversion).click(function(){
+			if (EPR.GLOBALS.selectedAnimation === animation){}else{
+				console.log("new animation selected");
+				EPR.GLOBALS.selectedAnimation = animation;
+			}
+		});*/
 		return animation.HTMLversion;
 	}
 
@@ -283,7 +282,7 @@ EPR.Animation = function(divAnimated){
 		var iteractionForm = $("<tr class='animationRow'><td></td></tr>");
 
 		var fromTime= $("<input class='animationInput' type='text' value='"+animation.stats.startTime+"'></input>");
-		var toTime= $("<input class='animationInput' type='text' value='"+(parseInt(animation.stats.startTime)+parseInt(animation.stats.duration))+"'></input>");
+		var toTime= $("<input class='animationInput' type='text' value='"+(animation.stats.startTime+animation.stats.duration)+"'></input>");
 		var setTime= $("<button class='animationButton'>SET Time</button>");
 
 
@@ -321,11 +320,15 @@ EPR.Animation = function(divAnimated){
 		});
 
 		fromTranslationSet.click(function(){
-			animation.stats.fromStatus = animation.stats.target.getStatus();
+			var matrix = $(animation.stats.target.htmlVersion).css('transform');
+			console.log(matrix);
+			animation.stats.fromMatrix = matrix;
 		});
 
 		toTranslationSet.click(function(){
-			animation.stats.toStatus =  animation.stats.target.getStatus();
+			var matrix = $(animation.stats.target.htmlVersion).css('transform');
+			console.log(matrix);
+			animation.stats.toMatrix = matrix;
 		});
 
 
@@ -430,7 +433,7 @@ EPR.workingDiv = function(name,dimX,dimY){
 	this.rotationY = new TimelineMax({paused:true}).fromTo(this.htmlVersion,10,{rotationY:-180,ease:Linear.easeNone},{rotationY:180,ease:Linear.easeNone}).progress(0.5);
 	this.rotationZ = new TimelineMax({paused:true}).fromTo(this.htmlVersion,10,{rotationZ:-180,ease:Linear.easeNone},{rotationZ:180,ease:Linear.easeNone}).progress(0.5);
 	
-	this.positionZ = new TimelineMax({paused:true}).fromTo(this.htmlVersion,10,{z:-1000,ease:Linear.easeNone},{z:1000,ease:Linear.easeNone}).progress(0.5);
+	this.positionZ = new TimelineMax({paused:true}).fromTo(this.htmlVersion,10,{z:-500,ease:Linear.easeNone},{z:500,ease:Linear.easeNone}).progress(0.5);
 	
     this.rotationXSlider = $("<div  class='rotationSlider'></div>").slider({orientation: "vertical",range: false,min: 0,max: 360,step:0.01,
         slide: function ( event, ui ) {div.rotationX.progress( ui.value/360);}});
@@ -514,6 +517,11 @@ EPR.workingDiv = function(name,dimX,dimY){
        	this.dimensionApplyButton.click(div.setDimensions);
         }    
 
+    this.updateStats = function(){
+
+
+    }
+
     this.transformControls = $("<div class='transforControl'></div>");
     $(this.transformControls)
     .append(this.rotationForm)
@@ -537,20 +545,20 @@ EPR.workingDiv = function(name,dimX,dimY){
 	for (var i =0;i<div.animations.length;i++){
 		console.log("existe una animación");
 		$(animationForm).append(div.animations[i].getHTML());
+		div.animations[i].getHTML().click(function(){
+			interactor.selectAnimation(div.animations[i]);
+		})
 	}		
 
 
 	animationAddButton.click(function(){
-		var newAnimation = new EPR.Animation(EPR.GLOBALS.selectedContainer);
-		div.animations.push(newAnimation);
-		$(animationForm).append(newAnimation.getHTML());		
-	});
-
-	animationRemoveButton.click(function(){
-		div.animations.remove(EPR.GLOBALS.selectedAnimation);
-		EPR.GLOBALS.selectedAnimation.getHTML().remove();
+		var newAnimation = new EPR.AnimationTraslation(EPR.GLOBALS.selectedContainer);
 		div.animations.push(newAnimation);
 		$(animationForm).append(div.animations[div.animations.length-1].getHTML());		
+
+		div.animations[div.animations.length-1].getHTML().click(function(){
+			interactor.selectAnimation(div.animations[div.animations.length-1]);
+		})
 	});
 
 
@@ -559,6 +567,7 @@ EPR.workingDiv = function(name,dimX,dimY){
   }
 
 	this.select = function (){
+		var positionMatrix = $(div.htmlVersion).css('transform');
 		
      	div.updateInterfaces();
 		div.pasiveAnimations.resume();
@@ -593,16 +602,11 @@ EPR.workingDiv = function(name,dimX,dimY){
 
 	}
 
-	this.getStatus = function(){
-		var status = {};
-		status.rotationX = (div.rotationX.progress()-0.5)*360;
-		status.rotationY = (div.rotationY.progress()-0.5)*360;
-		status.rotationZ = (div.rotationZ.progress()-0.5)*360;
-		status.positionZ = (div.positionZ.progress()-0.5)*2000;
-		status.positionX = div.htmlVersion.position().left;
-		status.positionY = div.htmlVersion.position().top;
-
-		return status;
+	this.getStats = function(){
+		var positionMatrix = $(div.htmlVersion).css('transform');
+		console.log(positionMatrix);
+		div.stats.transform = positionMatrix;
+		return div.stats;
 	}
 }
 
@@ -636,28 +640,10 @@ EPR.fusionFile = function(interactor){
 			var actualAnimation = actualDiv.animations[k];
 			console.log(actualAnimation.stats);
 			var stats = actualAnimation.stats;
-	   	 	var tween = "GTL.fromTo($('#"+stats.target.name+"'),"+stats.duration+","+
-	   	 		"{rotationX:"+stats.fromStatus.rotationX+","+
-				"rotationY:"+stats.fromStatus.rotationY+","+
-				"rotationZ:"+stats.fromStatus.rotationZ+","+
-				"x:"+stats.fromStatus.positionX+","+
-				"y:"+stats.fromStatus.positionY+","+
-				"z:"+stats.fromStatus.positionZ+"},"+
-
-
-	   	 		"{rotationX:"+stats.toStatus.rotationX+","+
-				"rotationY:"+stats.toStatus.rotationY+","+
-				"rotationZ:"+stats.toStatus.rotationZ+","+
-				"x:"+stats.toStatus.positionX+","+
-				"y:"+stats.toStatus.positionY+","+
-				"z:"+stats.toStatus.positionZ+"},"+
-
-
-	   	 		stats.startTime+");";			
+	   	 	var tween = "GTL.fromTo($('#"+stats.target.name+"'),"+stats.duration+",{transform:'"+stats.fromMatrix+"'},{transform:'"+stats.fromMatrix+"'},"+stats.startTime+");";			
        		holeFile += tween;
         }
     }
-
 
 
 
