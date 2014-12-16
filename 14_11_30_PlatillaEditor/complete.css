@@ -4,7 +4,7 @@
 	height: 1080px;
 	perspective:800px;
   background-color: rgba(255,255,255,0.8);
-  box-shadow: inset 0px 0px 20px 10px orange;
+  /*box-shadow: inset 0px 0px 20px 10px orange;*/
   overflow: hidden;
 }
 
@@ -52,7 +52,7 @@ b {
 
 .workingDiv{
   position: absolute;
-  background-image:  url( "img/letraE.jpg");
+ /* background-image:  url( "img/letraE.jpg");*/
   background-size: contain;
   background-color: #666;
 
@@ -367,4 +367,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0b7a1', end
 
 .animationSelected{
   box-shadow: inset 0px 0px 8px 6px darkblue;
+}
+
+.contentForm{
+   float:left;
+  width: 126px;
+  margin: 5px;
+  overflow: hidden;
+}
+
+.divDeleteButton{
+    position: absolute;
+  left:210px;
+   bottom:10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  color:white;
+  background-color: darkred;
+  font-size: 16px;
+  padding-top: 0px;
 }

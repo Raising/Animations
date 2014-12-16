@@ -73,10 +73,16 @@ EPR.Interactor = function(){
 		var d = new Date();
 		var fileName = "plantilla_"+d.getTime()+".html";
 		
+		for (var i = 0; i<interactor.divCreated.length ;i++){
+			interactor.divCreated[i].preparationForSave();		
+		}
 
-		
 		var result = EPR.fusionFile(interactor);
-		
+
+		for (var i = 0; i<interactor.divCreated.length ;i++){
+			interactor.divCreated[i].restraureFromSave();
+		}
+
 		var blob = new Blob([result], {type: 'application/octet-binary'}); // pass a useful mime type here
 		
 		var url = URL.createObjectURL(blob,fileName);
@@ -228,6 +234,8 @@ EPR.TransformMenu = function(identificador,interactor,posX,posY){
 		
 	}
 }
+
+
 
 EPR.AnimationSelectorMenu = function(identificador,interactor,posX,posY){
 	EPR.Menu.call(this,identificador,interactor,250,300,posX,posY);
@@ -391,9 +399,13 @@ EPR.workingDiv = function(name,dimX,dimY){
 
 	var div = this;
 	this.name = name;
-	this.htmlVersion = $("<div id='"+name+"' style='perspective:500px;width:"+dimX+"px;height:"+dimY+"px' class='workingDiv'></div>");
+	this.htmlVersion = $("<div id='"+name+"' style='perspective:500px;width:"+dimX+"px;height:"+dimY+"px' class='workingDiv' ></div>");
 
+	this.imagen = $("<img id='image_"+name+"'  style='width:100%;height:100%';position:absolute></img>");
+	this.texto = $("<div style='width:100%;height:100%;position:absolute;top:0;left:0'  contenteditable='true'></div>");
 
+	$(this.htmlVersion).append(this.imagen).append(this.texto);
+	$(this.texto).ckeditor();
 	this.animations = [];
 
 	this.stats = {
@@ -405,9 +417,9 @@ EPR.workingDiv = function(name,dimX,dimY){
 	};
 
 	this.pasiveAnimations = new TimelineMax({paused:true});
-	this.pasiveAnimations.fromTo(this.htmlVersion, 0.7,
-						{boxShadow: "0px 0px 0px 0px rgba(255,255,0,1) "}, 
-						{boxShadow: "0px 0px 20px 20px rgba(255,0,0,1) ",repeat: -1,yoyo: true,ease: Linear.easeNone});
+	this.pasiveAnimations.fromTo(this.htmlVersion, 3,
+						{boxShadow: "0px 0px 10px 10px rgba(255,0,0,0) "}, 
+						{boxShadow: "0px 0px 10px 10px rgba(255,0,0,1) ",repeat: -1,yoyo: true,ease: Elastic.easeOut});
 
 	
 	this.rotationForm = $("<div class='rotationForm'></div>");
@@ -514,16 +526,43 @@ EPR.workingDiv = function(name,dimX,dimY){
        	this.dimensionApplyButton.click(div.setDimensions);
         }    
 
+    this.contentForm = $("<div class='contentForm'></div>");
+    this.setImage = $("<input type='file' name='image'/>");
+    this.tokenField = $("<input type='text'/>");
+
+    $(this.contentForm).append(this.setImage).append(this.tokenField);
+
+     $(this.setImage).change(function (event){
+      	var tmppath = URL.createObjectURL(event.target.files[0]); 	
+       div.imagen.attr('src',URL.createObjectURL(event.target.files[0]));
+     });
+
+
+     this.deleteButton = $("<button class='divDeleteButton'>X</button>");
+	 $(this.deleteButton).click(function(){
+	 	console.log("borrando");
+	 	div.htmlVersion.remove();
+	 	div.animations = [];
+ 		});
+	 
     this.transformControls = $("<div class='transforControl'></div>");
     $(this.transformControls)
     .append(this.rotationForm)
     .append(this.dimensionForm)
     .append(this.positionZSlider)
+    .append( this.contentForm)
+    .append(this.deleteButton)
     .append($("<div class='clearfix'></div>"));
     
    this.getTransformControls = function(){
+   	 $(div.deleteButton).click(function(){
+	 	console.log("borrando");
+	 	div.htmlVersion.remove();
+	 	div.animations = [];
+ 		});
    	return div.transformControls;
    }
+
 
    this.getAnimationControls =function(interactor){
    	var animationForm = $("<div class='animationForm'></div>");
@@ -535,7 +574,6 @@ EPR.workingDiv = function(name,dimX,dimY){
 	.append($("<div class='clearfix'></div>"));
 
 	for (var i =0;i<div.animations.length;i++){
-		console.log("existe una animación");
 		$(animationForm).append(div.animations[i].getHTML());
 	}		
 
@@ -604,28 +642,35 @@ EPR.workingDiv = function(name,dimX,dimY){
 
 		return status;
 	}
+	this.preparationForSave = function(){
+		div.pasiveAnimations.pause().progress(0);
+		div.saveImage = $(div.imagen).attr('src');
+		$(div.imagen).attr('src',$(div.tokenField).val());
+	}
+
+	this.restraureFromSave = function(){
+		$(div.imagen).attr('src',div.saveImage);
+	}
 }
 
 
 EPR.fusionFile = function(interactor){
 	
-	var holeFile = '<html><head>'+
-       '<title>Plantilla</title>'+
-       '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">'+
-		'<meta name="viewport" content="width=device-width, initial-scale=1.0">'+
+	var holeFile = '<html><head>\n'+
+       '<title>Plantilla</title>\n'+
+       '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n'+
+		'<meta name="viewport" content="width=device-width, initial-scale=1.0">\n'+
 		
-		'<link href="complete.css" rel="stylesheet">'+
+		'<link href="complete.css" rel="stylesheet">\n'+
        
-		'<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js"></script>'+
-       ' <script type="text/javascript" src="libs/jquery-2.1.1.min.js"></script>'+
-     
-   
-	
-    '</head> <body>' + 
+		'<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js"></script>\n'+
+        '<script type="text/javascript" src="libs/jquery-2.1.1.min.js"></script>\n'+
+ 
+    '</head> <body>\n' + 
 
     $("#mainContainer")[0].outerHTML +
 
-    '</body><script>';
+    '\n</body><script>\n';
 
     holeFile += "var GTL = new TimelineMax();";
 
@@ -653,7 +698,7 @@ EPR.fusionFile = function(interactor){
 				"z:"+stats.toStatus.positionZ+"},"+
 
 
-	   	 		stats.startTime+");";			
+	   	 		stats.startTime+");\n";			
        		holeFile += tween;
         }
     }
@@ -661,7 +706,7 @@ EPR.fusionFile = function(interactor){
 
 
 
-   holeFile +='GTL.resume();</script></html>';
+   holeFile +='GTL.resume();\n</script>\n</html>';
 
 	return holeFile;
 
