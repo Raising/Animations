@@ -35,18 +35,22 @@ EPR.Interactor = function(){
 		interactor.GlobalTimeline = new EPR.GlobalTimelineMenu("globalTimer",interactor,0,1430);
 		interactor.AnimationSelector = new EPR.AnimationSelectorMenu("AnimationSelector",interactor,1150,1090);
 		interactor.AnimationTransform = new EPR.AnimationTransformMenu("AnimationTransform",interactor,670,1090);
+		interactor.TextEditor = new EPR.TextEditorMenu("TextEditor",interactor,10,1090);
 			
+
 		$("body").append(interactor.creator.mainContainer);
 		$("body").append(interactor.Transformator.mainContainer);
 		$("body").append(interactor.GlobalTimeline.mainContainer);
 		$("body").append(interactor.AnimationSelector.mainContainer);
 		$("body").append(interactor.AnimationTransform.mainContainer);
+		$("body").append(interactor.TextEditor.mainContainer);
 
 		interactor.AnimationSelector.setDragable();
 		interactor.creator.setDragable();
 		interactor.Transformator.setDragable();
 		interactor.GlobalTimeline.setDragable();
 		interactor.AnimationTransform.setDragable();
+		interactor.TextEditor.setDragable();
 	}
 
 	this.select = function(divSelected){
@@ -56,6 +60,7 @@ EPR.Interactor = function(){
 				divSelected.select();
 				interactor.Transformator.reset();
 				interactor.AnimationSelector.reset();
+				interactor.TextEditor.reset();
 		}
 	}
 
@@ -69,7 +74,7 @@ EPR.Interactor = function(){
 		}
 	}
 
-	this.saveHtml = function(){
+		this.saveHtml = function(){
 		var d = new Date();
 		var fileName = "plantilla_"+d.getTime()+".html";
 		
@@ -152,6 +157,30 @@ EPR.Menu = function(identificador,interactor,width,height,posX,posY){
 	        },
 		});
 	}
+}
+EPR.TextEditorMenu = function(identificador,interactor,posX,posY){
+	EPR.Menu.call(this,identificador,interactor,500,300,posX,posY);
+	var Tmenu= this;
+	this.textField = $("<div class='textFieldEditable' contenteditable='true'></div>");
+	$(this.body).append(this.textField);
+	$(this.textField).ckeditor();
+
+	$(this.textField).bind("DOMSubtreeModified",function(){
+		if (EPR.GLOBALS.selectedContainer.texto){
+			console.log("cambiando");
+  			$(EPR.GLOBALS.selectedContainer.texto)[0].innerHTML = ($(Tmenu.textField)[0].innerHTML);
+  		}
+	});
+
+
+
+	this.reset = function(){
+		var tempContent = $(EPR.GLOBALS.selectedContainer.texto)[0].innerHTML;
+		$(Tmenu.textField).height($(EPR.GLOBALS.selectedContainer.texto).height());
+		$(Tmenu.textField).width($(EPR.GLOBALS.selectedContainer.texto).width());
+		$(Tmenu.textField).empty().append(tempContent);
+	}
+
 }
 
 EPR.CreatorMenu = function(identificador,interactor,posX,posY){
@@ -402,10 +431,10 @@ EPR.workingDiv = function(name,dimX,dimY){
 	this.htmlVersion = $("<div id='"+name+"' style='perspective:500px;width:"+dimX+"px;height:"+dimY+"px' class='workingDiv' ></div>");
 
 	this.imagen = $("<img id='image_"+name+"'  style='width:100%;height:100%';position:absolute></img>");
-	this.texto = $("<div style='width:100%;height:100%;position:absolute;top:0;left:0'  contenteditable='true'></div>");
+	this.texto = $("<div style='width:100%;height:100%;position:absolute;top:0;left:0;overflow:hidden'></div>");
 
 	$(this.htmlVersion).append(this.imagen).append(this.texto);
-	$(this.texto).ckeditor();
+	//$(this.texto).ckeditor();
 	this.animations = [];
 
 	this.stats = {
@@ -533,8 +562,10 @@ EPR.workingDiv = function(name,dimX,dimY){
     $(this.contentForm).append(this.setImage).append(this.tokenField);
 
      $(this.setImage).change(function (event){
-      	var tmppath = URL.createObjectURL(event.target.files[0]); 	
+     	
+      //	var tmppath = URL.createObjectURL(event.target.files[0]); 	
        div.imagen.attr('src',URL.createObjectURL(event.target.files[0]));
+
      });
 
 
@@ -555,6 +586,11 @@ EPR.workingDiv = function(name,dimX,dimY){
     .append($("<div class='clearfix'></div>"));
     
    this.getTransformControls = function(){
+
+     $(this.setImage).change(function (event){	
+       div.imagen.attr('src',URL.createObjectURL(event.target.files[0]));
+     });
+     
    	 $(div.deleteButton).click(function(){
 	 	console.log("borrando");
 	 	div.htmlVersion.remove();

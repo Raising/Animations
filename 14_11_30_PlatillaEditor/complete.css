@@ -54,7 +54,7 @@ b {
   position: absolute;
  /* background-image:  url( "img/letraE.jpg");*/
   background-size: contain;
-  background-color: #666;
+  background-color: rgba(100,100,100,0.1);
 
 }
 
@@ -387,4 +387,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0b7a1', end
   background-color: darkred;
   font-size: 16px;
   padding-top: 0px;
+}
+
+.textFieldEditable{
+  width: 100%;
+  height: 100%;
+  background-color: white;
 }
