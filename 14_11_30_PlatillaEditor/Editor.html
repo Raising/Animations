@@ -7,12 +7,15 @@
 
 
 		<link href="complete.css" rel="stylesheet">
+        <link href="ARMStyles.css" rel="stylesheet">
+        
         <link href="libs/jquery-ui-1.10.4.custom.css" rel="stylesheet">
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js"></script>
         <script type="text/javascript" src="libs/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="libs/jquery-ui-1.10.3.custom.min.js"></script>
         <script type="text/javascript" src="libs/SplitText.min.js"></script>
         <script type="text/javascript" src="libs/Draggable.min.js"></script>
+        <script type="text/javascript" src="libs/ARM.js"></script>
         <script type="text/javascript" src="libs/ckeditor_4.4.6_full/ckeditor/ckeditor.js"></script>
         <script type="text/javascript" src="libs/ckeditor_4.4.6_full/ckeditor/adapters/jquery.js"></script>
         <script type="text/javascript" src="libs/ScrambleTextPlugin.min.js"></script>
@@ -23,7 +26,34 @@
 
 
         <div id="mainContainer"></div>
+        <div id="functionSelector" class="selector">
+                <div id="targetSelector">
+                    <div id="kind">
+                        <button id="buttonTexto" class="botonSelector">Texto</button>
+                        <button id="buttonContenedor" class="botonSelector">Contenedor</button>
+                        <button id="buttonGrupal" class="botonSelector">Grupal</button>
+                    </div>
+                    <div id ="flow">
+                        <button id="buttonEntrada" class="botonSelector">Entrada</button>
+                        <button id="buttonMantenido" class="botonSelector">Mantenido</button>
+                        <button id="buttonSalida" class="botonSelector">Salida</button>
+                    </div>
 
+                    <div id="Texto-Entrada"   class="functionHolder"></div>
+                    <div id="Texto-Mantenido"   class="functionHolder"></div>
+                    <div id="Texto-Salida"   class="functionHolder"></div>
+                    <div id="Contenedor-Entrada"   class="functionHolder"></div>
+                    <div id="Contenedor-Mantenido"   class="functionHolder"></div>
+                    <div id="Contenedor-Salida"   class="functionHolder"></div>
+                    <div id="Grupal-Entrada"   class="functionHolder"></div>
+                    <div id="Grupal-Mantenido"   class="functionHolder"></div>
+                    <div id="Grupal-Salida"   class="functionHolder"></div>
+                 
+
+                </div>
+
+
+            </div>
 
     </body>
 </html>

@@ -74,7 +74,7 @@ EPR.Interactor = function(){
 		}
 	}
 
-		this.saveHtml = function(){
+	this.saveHtml = function(){
 		var d = new Date();
 		var fileName = "plantilla_"+d.getTime()+".html";
 		
@@ -306,7 +306,16 @@ EPR.Animation = function(divAnimated){
 		return animation.HTMLversion;
 	}
 
+
 	this.animationForm = $("<div class='AnimationTransformContainer'></div>");
+
+	this.setARMfunction = function(funcName){
+		animation.stats.tipo="ARM";
+		animation.stats.ARMfunction = funcName;
+		animation.stats.situation = animation.stats.target.getStatus();
+	}
+
+
 	this.getAnimationTransformControls = function(){
 		var controlForm = $("<table><tr>"+
 								"<th></th>"+
@@ -318,6 +327,7 @@ EPR.Animation = function(divAnimated){
 		var fromForm = $("<tr class='animationRow'><td>From</td></tr>");
 		var toForm = $("<tr class='animationRow'><td>To</td></tr>");
 		var iteractionForm = $("<tr class='animationRow'><td></td></tr>");
+		
 
 		var fromTime= $("<input class='animationInput' type='text' value='"+animation.stats.startTime+"'></input>");
 		var toTime= $("<input class='animationInput' type='text' value='"+(parseInt(animation.stats.startTime)+parseInt(animation.stats.duration))+"'></input>");
@@ -332,6 +342,8 @@ EPR.Animation = function(divAnimated){
 		var toOpacity= $("<input class='animationInput' type='text' value='"+animation.stats.toOpacity+"'></input>");
 		var setOpacity= $("<button class='animationButton'>SET opacity</button>");
 
+		var ARMselectionButton = $("<button class='animationButton'>ARM</button>");
+
 
 		$(animation.animationForm).empty().append(controlForm);
 		$(controlForm)
@@ -341,7 +353,8 @@ EPR.Animation = function(divAnimated){
 		$(fromForm)
 		.append($("<td>").append(fromTime))
 		.append($("<td>").append(fromTranslationSet))
-		.append($("<td>").append(fromOpacity));
+		.append($("<td>").append(fromOpacity))
+		.append($("<td>").append(ARMselectionButton));
 		$(toForm)
 		.append($("<td>").append(toTime))
 		.append($("<td>").append(toTranslationSet))
@@ -350,6 +363,8 @@ EPR.Animation = function(divAnimated){
 		.append($("<td>").append(setTime))
 		.append($("<td>").append(clearTranslationSet))
 		.append($("<td>").append(setOpacity));
+		
+
 
 		setTime.click(function(){
 			animation.stats.startTime = fromTime.val();
@@ -359,10 +374,23 @@ EPR.Animation = function(divAnimated){
 
 		fromTranslationSet.click(function(){
 			animation.stats.fromStatus = animation.stats.target.getStatus();
+			animation.stats.tipo = "desplazamiento";
 		});
 
 		toTranslationSet.click(function(){
 			animation.stats.toStatus =  animation.stats.target.getStatus();
+			animation.stats.tipo = "desplazamiento";
+		});
+		var ARMopen = 0;
+		ARMselectionButton.click(function(){
+			if(ARMopen == 0){
+				$("#functionSelector").addClass("show");
+				ARMopen = 1;
+			}else{
+				$("#functionSelector").removeClass("show");
+				ARMopen = 0;
+			}
+			
 		});
 
 
@@ -617,7 +645,9 @@ EPR.workingDiv = function(name,dimX,dimY){
 	animationAddButton.click(function(){
 		var newAnimation = new EPR.Animation(EPR.GLOBALS.selectedContainer);
 		div.animations.push(newAnimation);
-		$(animationForm).append(newAnimation.getHTML());		
+		$(animationForm).append(newAnimation.getHTML());
+		newAnimation.getHTML().click();
+
 	});
 
 	animationRemoveButton.click(function(){
@@ -669,6 +699,7 @@ EPR.workingDiv = function(name,dimX,dimY){
 
 	this.getStatus = function(){
 		var status = {};
+		status.tipo = "desplazamiento";
 		status.rotationX = (div.rotationX.progress()-0.5)*360;
 		status.rotationY = (div.rotationY.progress()-0.5)*360;
 		status.rotationZ = (div.rotationZ.progress()-0.5)*360;
@@ -701,6 +732,8 @@ EPR.fusionFile = function(interactor){
        
 		'<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js"></script>\n'+
         '<script type="text/javascript" src="libs/jquery-2.1.1.min.js"></script>\n'+
+        '<script type="text/javascript" src="libs/SplitText.min.js"></script>\n'+
+ 		'<script type="text/javascript" src="libs/ARM.js"></script>\n'+
  
     '</head> <body>\n' + 
 
@@ -708,15 +741,19 @@ EPR.fusionFile = function(interactor){
 
     '\n</body><script>\n';
 
-    holeFile += "var GTL = new TimelineMax();";
+    holeFile += "var GTL = new TimelineMax();\n";
 
     for (var i = 0; i < interactor.divCreated.length;i++){
     	var actualDiv = interactor.divCreated[i];
+    	console.log(actualDiv.animations);
     	for (var k = 0;k<actualDiv.animations.length;k++){
     		console.log(actualDiv.animations);
 			var actualAnimation = actualDiv.animations[k];
+
 			console.log(actualAnimation.stats);
 			var stats = actualAnimation.stats;
+
+			if (stats.tipo == "desplazamiento"){
 	   	 	var tween = "GTL.fromTo($('#"+stats.target.name+"'),"+stats.duration+","+
 	   	 		"{rotationX:"+stats.fromStatus.rotationX+","+
 				"rotationY:"+stats.fromStatus.rotationY+","+
@@ -734,7 +771,18 @@ EPR.fusionFile = function(interactor){
 				"z:"+stats.toStatus.positionZ+"},"+
 
 
-	   	 		stats.startTime+");\n";			
+	   	 		stats.startTime+");\n";		
+	   	 	}else if(stats.tipo == "ARM"){
+	   	 		var functionSplited = stats.ARMfunction.split(".");
+	   	 		console.log(functionSplited);
+	   	 		if (functionSplited[0] == "Text"){
+	   	 		var tween = "GTL.add(ARM."+stats.ARMfunction+"('"+stats.target.name+"',"+stats.duration+"),"+
+		   	 			stats.startTime+");\n";			
+	   	 		}else{
+				var tween = "GTL.call(function(){GTL.add(ARM."+stats.ARMfunction+"('"+stats.target.name+"',"+stats.duration+"),"+
+		   	 			stats.startTime+");},null,'',"+stats.startTime+");\n";		
+	   	 		}
+	   	 	}	
        		holeFile += tween;
         }
     }
