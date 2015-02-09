@@ -26,17 +26,19 @@ EPR.Interactor = function(){
 	this.addDiv = function(workingDiv){
 
 		interactor.divCreated.push(workingDiv);
+		interactor.ContainersMenu.reset();
 	}
+
 
 	this.addMenus = function(){
 	
-		interactor.creator =  new EPR.CreatorMenu("creator",interactor,1410,1200);
+		interactor.creator =  new EPR.CreatorMenu("creator",interactor,1930,10);
 		interactor.Transformator = new EPR.TransformMenu("transformator",interactor,1670,1090);
 		interactor.GlobalTimeline = new EPR.GlobalTimelineMenu("globalTimer",interactor,0,1430);
 		interactor.AnimationSelector = new EPR.AnimationSelectorMenu("AnimationSelector",interactor,1150,1090);
 		interactor.AnimationTransform = new EPR.AnimationTransformMenu("AnimationTransform",interactor,670,1090);
 		interactor.TextEditor = new EPR.TextEditorMenu("TextEditor",interactor,10,1090);
-			
+		interactor.ContainersMenu =  new EPR.ContainersMenu("ContainerHandler",interactor,1930,250);
 
 		$("body").append(interactor.creator.mainContainer);
 		$("body").append(interactor.Transformator.mainContainer);
@@ -44,6 +46,8 @@ EPR.Interactor = function(){
 		$("body").append(interactor.AnimationSelector.mainContainer);
 		$("body").append(interactor.AnimationTransform.mainContainer);
 		$("body").append(interactor.TextEditor.mainContainer);
+		$("body").append(interactor.ContainersMenu.mainContainer);
+
 
 		interactor.AnimationSelector.setDragable();
 		interactor.creator.setDragable();
@@ -51,6 +55,44 @@ EPR.Interactor = function(){
 		interactor.GlobalTimeline.setDragable();
 		interactor.AnimationTransform.setDragable();
 		interactor.TextEditor.setDragable();
+		interactor.ContainersMenu.setDragable();
+	}
+
+	this.reformMenus = function(){
+
+		
+		$("#mainContainer").empty();
+		for (var i = 0 ; i < interactor.divCreated.length;i++){
+			interactor.divCreated[i].insertInTo(interactor.divCreated[i].father);
+			interactor.divCreated[i].setBasicInteraction();
+		}
+		interactor.ContainersMenu.reset();
+	}
+
+	this.moveUp = function (div) {
+		var pos = interactor.divCreated.indexOf(div);
+		console.log(pos);
+		if (pos==0){
+			alert("el div seleccionado ya está en la parte posterior");
+		}else{
+			var tempDiv = interactor.divCreated[pos-1];
+			interactor.divCreated[pos-1] =div;
+			interactor.divCreated[pos] = tempDiv;
+		}
+		interactor.reformMenus();
+	}
+
+	this.moveDown = function (div) {
+		var pos = interactor.divCreated.indexOf(div);
+		console.log(pos);
+		if (pos==(interactor.divCreated.length-1)){
+			alert("el div seleccionado ya está en la parte frontal");
+		}else{
+			var tempDiv = interactor.divCreated[pos+1];
+			interactor.divCreated[pos+1] = div;
+			interactor.divCreated[pos] = tempDiv;
+		}
+		interactor.reformMenus();
 	}
 
 	this.select = function(divSelected){
@@ -61,6 +103,8 @@ EPR.Interactor = function(){
 				interactor.Transformator.reset();
 				interactor.AnimationSelector.reset();
 				interactor.TextEditor.reset();
+				interactor.ContainersMenu.reset();
+
 		}
 	}
 
@@ -220,7 +264,7 @@ EPR.CreatorMenu = function(identificador,interactor,posX,posY){
 		var dimY = $(Cmenu.ySizeInput).val();
 		
 		if (name == ""){
-				Cmenu.numDivs++;
+			Cmenu.numDivs++;
 			name = "div_number_" + Cmenu.numDivs;
 		}
 
@@ -232,14 +276,17 @@ EPR.CreatorMenu = function(identificador,interactor,posX,posY){
 		var newDiv = new EPR.workingDiv(name,dimX,dimY);
 		
 		if ($(Cmenu.checkInside).prop('checked')){
+			newDiv.father=EPR.GLOBALS.selectedContainer;
 			newDiv.insertInTo(EPR.GLOBALS.selectedContainer);
 		}else{
+			newDiv.father="null";
 			newDiv.insertInTo();
 		}
 		
 		newDiv.setBasicInteraction();
 		EPR.GLOBALS.interactor.addDiv(newDiv);
 	}
+
 	$(this.addDivButton).click(this.createNewDiv);
 
 
@@ -250,6 +297,7 @@ EPR.CreatorMenu = function(identificador,interactor,posX,posY){
     this.perspectiveHandlerSlider.slider("value", this.perspectiveHandler.progress() *100);
      $(this.body).append(this.perspectiveHandlerSlider);
 }	
+
 
 EPR.TransformMenu = function(identificador,interactor,posX,posY){
 
@@ -263,6 +311,29 @@ EPR.TransformMenu = function(identificador,interactor,posX,posY){
 		
 	}
 }
+
+EPR.ContainersMenu = function(identificador,interactor,posX,posY){
+
+	EPR.Menu.call(this,identificador,interactor,250,615,posX,posY);
+	var CONTmenu =this;
+
+	console.log("creando");
+	this.reset = function(){
+		console.log("reset invocado");
+		$(CONTmenu.body).empty();
+		for (var i = 0 ; i< interactor.divCreated.length;i++){
+			if (interactor.divCreated[i] === EPR.GLOBALS.selectedContainer){
+			$(CONTmenu.body).append(interactor.divCreated[i].getDivControls(interactor,true));		
+			}
+			else{
+			$(CONTmenu.body).append(interactor.divCreated[i].getDivControls(interactor,false));	
+			}
+		}
+	}
+
+}
+
+
 
 
 
@@ -404,6 +475,7 @@ EPR.AnimationTransformMenu = function(identificador,interactor,posX,posY){
 
 	this.reset = function(){
 		console.log("insertando animacion");
+
 		$(ATmenu.body).empty().append(EPR.GLOBALS.selectedAnimation.getAnimationTransformControls());	
 	}
 }
@@ -628,7 +700,7 @@ EPR.workingDiv = function(name,dimX,dimY){
    }
 
 
-   this.getAnimationControls =function(interactor){
+  this.getAnimationControls =function(interactor){
    	var animationForm = $("<div class='animationForm'></div>");
 	var animationAddButton = $("<button class='animationAddButton'>+</button>");
 	var animationRemoveButton = $("<button class='animationDeleteButton'>--</button>");
@@ -671,7 +743,7 @@ EPR.workingDiv = function(name,dimX,dimY){
 
 	this.insertInTo = function(identificador){
 		TweenMax.to(div.htmlVersion,0.1,{rotationY:0.01});
-		if (!identificador){
+		if (!identificador || identificador == "null"){
 			$("#mainContainer").append(div.htmlVersion);
 		}
 		else{
@@ -717,6 +789,42 @@ EPR.workingDiv = function(name,dimX,dimY){
 
 	this.restraureFromSave = function(){
 		$(div.imagen).attr('src',div.saveImage);
+	}
+
+	this.getDivControls = function(interactor,selected){
+			if (selected == true){
+					var divForm = $("<div class='divForm selected'>"+div.name+"</div>");
+			}else{
+					var divForm = $("<div class='divForm'>"+div.name+"</div>");
+			}
+			
+
+
+			var divUPButton= $("<button class='divUP'>^</button>");
+			var divDOWNButton = $("<button class='divDown'>v</button>");
+
+			$(divForm).append(divUPButton)
+			.append(divDOWNButton)
+			.append($("<div class='clearfix'></div>"));
+/*
+			for (var i =0;i<div.animations.length;i++){
+				$(animationForm).append(div.animations[i].getHTML());
+			}		
+		*/ 	divForm.click(function() {
+			 interactor.select(div);
+			});
+		
+			divUPButton.click(function(){
+				interactor.moveUp(div);
+			});
+
+			divDOWNButton.click(function(){
+				interactor.moveDown(div);	
+			});
+
+
+			
+			return divForm;
 	}
 }
 

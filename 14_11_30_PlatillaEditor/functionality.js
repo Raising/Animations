@@ -13,7 +13,6 @@ $(document).ready(function() {
 
 	EPR.GLOBALS.interactor = new EPR.Interactor();
 	EPR.GLOBALS.interactor.addMenus();
- console.log(EPR.GLOBALS);
 
 	var frameSelected = "frameTop";
 	var kindSelected = "Texto";
@@ -136,7 +135,6 @@ $(document).ready(function() {
 
 	}
 	for(var fun in ARM.Container.Mid ){
-		console.log(fun);
 		$("<button id='"+fun+"' class='function'>"+fun+"</button>").click(
 				function(auxFun){return function(){	
 				EPR.GLOBALS.selectedAnimation.stats.tipo = "ARM";
