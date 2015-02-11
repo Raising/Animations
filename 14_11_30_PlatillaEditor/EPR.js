@@ -7,7 +7,7 @@ EPR.GLOBALS.maxDuration = 10;
 EPR.GLOBALS.selectedAnimation = {};
 
 
-EPR.Interactor = function(){
+EPR.interactor = function(){
 
 	var interactor = this;
 	this.ableMenus = [];
@@ -33,10 +33,10 @@ EPR.Interactor = function(){
 	this.addMenus = function(){
 	
 		interactor.creator =  new EPR.CreatorMenu("creator",interactor,1930,10);
-		interactor.Transformator = new EPR.TransformMenu("transformator",interactor,1670,1090);
+		interactor.Transformator = new EPR.TransformMenu("transformator",interactor,2190,10);
 		interactor.GlobalTimeline = new EPR.GlobalTimelineMenu("globalTimer",interactor,0,1430);
-		interactor.AnimationSelector = new EPR.AnimationSelectorMenu("AnimationSelector",interactor,1150,1090);
-		interactor.AnimationTransform = new EPR.AnimationTransformMenu("AnimationTransform",interactor,670,1090);
+		interactor.AnimationSelector = new EPR.AnimationSelectorMenu("AnimationSelector",interactor,2190,360);
+		interactor.AnimationTransform = new EPR.AnimationTransformMenu("AnimationTransform",interactor,1930,890);
 		interactor.TextEditor = new EPR.TextEditorMenu("TextEditor",interactor,10,1090);
 		interactor.ContainersMenu =  new EPR.ContainersMenu("ContainerHandler",interactor,1930,250);
 
@@ -202,6 +202,7 @@ EPR.Menu = function(identificador,interactor,width,height,posX,posY){
 		});
 	}
 }
+
 EPR.TextEditorMenu = function(identificador,interactor,posX,posY){
 	EPR.Menu.call(this,identificador,interactor,500,300,posX,posY);
 	var Tmenu= this;
@@ -231,16 +232,16 @@ EPR.CreatorMenu = function(identificador,interactor,posX,posY){
 	EPR.Menu.call(this,identificador,interactor,250,200,posX,posY);
 	var Cmenu= this;
 	this.numDivs = 0;
-	this.addDivButton = $("<button>|+|</button>");
+	this.addDivButton = $("<button class='crearButton'>Crear DIV</button>");
 	this.creationForm = $("<div class='creationForm clearfix'></div>");
-	this.nameInput = $("<input type='text'></input>");
+	this.nameInput = $("<input class='crearName' type='text'></input>");
 	this.xSizeInput = $("<input class='sizeInput' type='text'></input>");
 	this.ySizeInput = $("<input class='sizeInput' type='text'></input>");
-	this.xSizeLabel = $("<label class='sizeLabel'>X:</label>");
-	this.ySizeLabel = $("<label class='sizeLabel'>Y:</label>");
+	this.xSizeLabel = $("<label class='sizeLabel'>W:</label>");
+	this.ySizeLabel = $("<label class='sizeLabel'>H:</label>");
 	this.xSizeCluster = $("<div class='sizeCluster'></div>");
 	this.ySizeCluster = $("<div class='sizeCluster'></div>");
-	this.checkInside = $("<input type='checkbox'></input");
+	this.checkInside = $("<input class='crearCheck' type='checkbox'></input");
 	this.clearDiv = $("<div class='clearfix'></div>");
 
 	this.saveButton = $("<button class='headerButon'>Salvar Plantilla</button>");
@@ -383,18 +384,15 @@ EPR.Animation = function(divAnimated){
 	this.setARMfunction = function(funcName){
 		animation.stats.tipo="ARM";
 		animation.stats.ARMfunction = funcName;
+		$("#ARM_text").addClass("tipoAnimacionSeleccionada");
+		$("#POS_text").removeClass("tipoAnimacionSeleccionada");
+		$("#ARM_function").empty().append(funcName);
 		animation.stats.situation = animation.stats.target.getStatus();
 	}
 
 
 	this.getAnimationTransformControls = function(){
-		var controlForm = $("<table><tr>"+
-								"<th></th>"+
-								"<th>Time</th>"+
-								"<th>Position</th>"+
-								"<th>Opacity</th>"+
-								"<th>Special</th>"+
-							"</tr></table>");
+		
 		var fromForm = $("<tr class='animationRow'><td>From</td></tr>");
 		var toForm = $("<tr class='animationRow'><td>To</td></tr>");
 		var iteractionForm = $("<tr class='animationRow'><td></td></tr>");
@@ -409,11 +407,37 @@ EPR.Animation = function(divAnimated){
 		var toTranslationSet= $("<button class='animationButton'>SET To</button>");
 		var clearTranslationSet= $("<button class='animationButton'>CLEAR</button>");
 
-		var fromOpacity= $("<input class='animationInput' type='text' value='"+animation.stats.fromOpacity+"'></input>");
+	/*	var fromOpacity= $("<input class='animationInput' type='text' value='"+animation.stats.fromOpacity+"'></input>");
 		var toOpacity= $("<input class='animationInput' type='text' value='"+animation.stats.toOpacity+"'></input>");
 		var setOpacity= $("<button class='animationButton'>SET opacity</button>");
-
-		var ARMselectionButton = $("<button class='animationButton'>ARM</button>");
+*/
+		var ARMselectionButton = $("<button class='animationButton'>OPEN ARM</button>");
+		if (animation.stats.tipo ==="ARM"){
+			var controlForm = $("<table><tr>"+
+								"<th></th>"+
+								"<th>Time</th>"+
+								"<th id='POS_text' class=''>Position</th>"+						
+								"<th id='ARM_text' class='tipoAnimacionSeleccionada'>ARM</th>"+
+							"</tr></table>");
+			var ARMselection = $("<span class='animationText'  id='ARM_function'>"+animation.stats.ARMfunction+"</span>");	
+		}else if (animation.stats.tipo ==="desplazamiento"){
+			var controlForm = $("<table><tr>"+
+								"<th></th>"+
+								"<th>Time</th>"+
+								"<th id='POS_text' class='tipoAnimacionSeleccionada'>Position</th>"+						
+								"<th id='ARM_text' class=''>ARM</th>"+
+							"</tr></table>");
+			var ARMselection = $("<span class='animationText'  id='ARM_function'></span>");
+		}else{
+			var controlForm = $("<table><tr>"+
+								"<th></th>"+
+								"<th>Time</th>"+
+								"<th id='POS_text' class=''>Position</th>"+						
+								"<th id='ARM_text' class=''>ARM</th>"+
+							"</tr></table>");
+			var ARMselection = $("<span class='animationText'  id='ARM_function'></span>");
+		}
+		
 
 
 		$(animation.animationForm).empty().append(controlForm);
@@ -424,16 +448,19 @@ EPR.Animation = function(divAnimated){
 		$(fromForm)
 		.append($("<td>").append(fromTime))
 		.append($("<td>").append(fromTranslationSet))
-		.append($("<td>").append(fromOpacity))
-		.append($("<td>").append(ARMselectionButton));
+		.append($("<td>").append(ARMselection));
+		ARMselection
+		//.append($("<td>").append(fromOpacity))
+		
 		$(toForm)
 		.append($("<td>").append(toTime))
-		.append($("<td>").append(toTranslationSet))
-		.append($("<td>").append(toOpacity));
+		.append($("<td>").append(toTranslationSet));
+		//.append($("<td>").append(toOpacity));
 		$(iteractionForm)
 		.append($("<td>").append(setTime))
 		.append($("<td>").append(clearTranslationSet))
-		.append($("<td>").append(setOpacity));
+		.append($("<td>").append(ARMselectionButton));
+		//.append($("<td>").append(setOpacity));
 		
 
 
@@ -446,11 +473,17 @@ EPR.Animation = function(divAnimated){
 		fromTranslationSet.click(function(){
 			animation.stats.fromStatus = animation.stats.target.getStatus();
 			animation.stats.tipo = "desplazamiento";
+			$("#ARM_text").removeClass("tipoAnimacionSeleccionada");
+			$("#POS_text").addClass("tipoAnimacionSeleccionada");
+			$("#ARM_function").empty();
 		});
 
 		toTranslationSet.click(function(){
 			animation.stats.toStatus =  animation.stats.target.getStatus();
 			animation.stats.tipo = "desplazamiento";
+			$("#ARM_text").removeClass("tipoAnimacionSeleccionada");
+			$("#POS_text").addClass("tipoAnimacionSeleccionada");
+			$("#ARM_function").empty();
 		});
 		var ARMopen = 0;
 		ARMselectionButton.click(function(){
@@ -702,8 +735,8 @@ EPR.workingDiv = function(name,dimX,dimY){
 
   this.getAnimationControls =function(interactor){
    	var animationForm = $("<div class='animationForm'></div>");
-	var animationAddButton = $("<button class='animationAddButton'>+</button>");
-	var animationRemoveButton = $("<button class='animationDeleteButton'>--</button>");
+	var animationAddButton = $("<button class='animationAddButton'>Crear</button>");
+	var animationRemoveButton = $("<button class='animationDeleteButton'>Eliminar</button>");
 
 	$(animationForm).append(animationAddButton)
 	.append(animationRemoveButton)

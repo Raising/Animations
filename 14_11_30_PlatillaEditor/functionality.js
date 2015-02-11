@@ -10,8 +10,8 @@ $(document).ready(function() {
 
 
 
-
-	EPR.GLOBALS.interactor = new EPR.Interactor();
+	
+	EPR.GLOBALS.interactor = new EPR.interactor();
 	EPR.GLOBALS.interactor.addMenus();
 
 	var frameSelected = "frameTop";
@@ -51,8 +51,9 @@ $(document).ready(function() {
 		$("<button id='"+fun+"' class='function'>"+fun+"</button>").click(
 			
 			function(auxFun){return function(){	
-				EPR.GLOBALS.selectedAnimation.stats.tipo = "ARM";
+				
 				EPR.GLOBALS.selectedAnimation.setARMfunction("Text.In."+auxFun);
+
 				console.log(EPR.GLOBALS.selectedAnimation);
 				ARM.Text.In[auxFun](EPR.GLOBALS.selectedContainer.name,EPR.GLOBALS.selectedAnimation.stats.duration);	
 

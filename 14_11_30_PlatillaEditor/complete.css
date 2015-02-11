@@ -87,15 +87,17 @@ b {
 }
 
 .sizeInput{
-  width: 40px;
-  border-radius: 4px;
+  width: 70px;
+  height: 30px;
+  font-size: 18px;
+  border-radius: 10px;
 }
 
 .sizeCluster{
   margin-top: 10px;
   float:left;
-  margin-left: 25px;
-  margin-right: 25px;
+  margin-left: 15px;
+  margin-right:5px;
 }
 
 .clearfix{
@@ -315,28 +317,30 @@ b {
 
 .animationAddButton{
    position: absolute;
-  left:170px;
+  left:30px;
   bottom:10px;
-  width: 30px;
+  width: 90px;
   height: 30px;
   border-radius: 15px;
   color:white;
   background-color: darkgreen;
   font-size: 16px;
   padding-top: 0px;
+  font-size: 18px;
 }
 
 .animationDeleteButton{
    position: absolute;
-  left:210px;
+  left:140px;
    bottom:10px;
-  width: 30px;
+  width: 90px;
   height: 30px;
   border-radius: 15px;
   color:white;
   background-color: darkred;
   font-size: 16px;
   padding-top: 0px;
+  font-size: 18px;
 }
 
 
@@ -435,4 +439,54 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0b7a1', end
   width: 100%;
   height: 100%;
   background-color: white;
+}
+.crearButton{
+  position:relative;
+  width: 90%;
+  left:5%;
+  margin-bottom: 10px;
+  height: 40px;
+  font-size: 18px;
+  border-radius: 10px;
+   background: -moz-linear-gradient(top, #ea8125 3%, #ea2803 12%, #ff6600 73%, #c72200 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,#ea8125), color-stop(12%,#ea2803), color-stop(73%,#ff6600), color-stop(100%,#c72200)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #ea8125 3%,#ea2803 12%,#ff6600 73%,#c72200 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #ea8125 3%,#ea2803 12%,#ff6600 73%,#c72200 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #ea8125 3%,#ea2803 12%,#ff6600 73%,#c72200 100%); /* IE10+ */
+background: linear-gradient(to bottom, #ea8125 3%,#ea2803 12%,#ff6600 73%,#c72200 100%); /* W3C */
+}
+
+.crearName{
+  position:relative;
+  width: 80%;
+  left:5%;
+  margin-bottom: 5px;
+  height: 30px;
+  font-size: 18px;
+  border-radius: 10px;
+}
+
+.crearCheck{
+ position:relative;
+  width: 25px;
+  right:-15px;
+  top:7px;
+  margin-bottom: 5px;
+  height: 25px;
+  font-size: 18px;
+  border-radius: 10px;
+}
+
+.tipoAnimacionSeleccionada{
+  background-color: lightgreen;
+  border-radius: 5px;
+}
+
+.animationText{
+  background-color: #333;
+  color: white;
+  font-size: 18px;
+  width: 80px;
+  border-radius: 5px;
+
 }
