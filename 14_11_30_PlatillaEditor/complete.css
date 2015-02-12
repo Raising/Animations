@@ -480,6 +480,7 @@ background: linear-gradient(to bottom, #ea8125 3%,#ea2803 12%,#ff6600 73%,#c7220
 .tipoAnimacionSeleccionada{
   background-color: lightgreen;
   border-radius: 5px;
+  
 }
 
 .animationText{
