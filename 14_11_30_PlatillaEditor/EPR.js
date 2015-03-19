@@ -1,4 +1,4 @@
-var EPR = {author:"Ignacio Medina castillo , AKA Raising"};
+ var EPR = {author:"Ignacio Medina castillo , AKA Raising"};
 
 
 EPR.GLOBALS = {};
@@ -56,6 +56,7 @@ EPR.interactor = function(){
 		interactor.AnimationTransform.setDragable();
 		interactor.TextEditor.setDragable();
 		interactor.ContainersMenu.setDragable();
+
 	}
 
 	this.reformMenus = function(){
@@ -122,6 +123,7 @@ EPR.interactor = function(){
 		var d = new Date();
 		var fileName = "plantilla_"+d.getTime()+".html";
 		
+		
 		for (var i = 0; i<interactor.divCreated.length ;i++){
 			interactor.divCreated[i].preparationForSave();		
 		}
@@ -132,11 +134,13 @@ EPR.interactor = function(){
 			interactor.divCreated[i].restraureFromSave();
 		}
 
-		var blob = new Blob([result], {type: 'application/octet-binary'}); // pass a useful mime type here
-		
+		var blob = new Blob([result], {type: 'octet/stream'}); // pass a useful mime type here
+		console.log(window.saveAs);
 		var url = URL.createObjectURL(blob,fileName);
-		var enlace = $("<a href='"+url+"'>CLICKONME</a>");
-		$(interactor.creator.body).append(enlace);
+
+        window.open(url, '_blank', '');
+      
+
 		
 	}
 
@@ -244,20 +248,22 @@ EPR.CreatorMenu = function(identificador,interactor,posX,posY){
 	this.checkInside = $("<input class='crearCheck' type='checkbox'></input");
 	this.clearDiv = $("<div class='clearfix'></div>");
 
-	this.saveButton = $("<button class='headerButon'>Salvar Plantilla</button>");
-	$(this.header).append(this.saveButton);
-	this.saveButton.click(Cmenu.interactor.saveHtml);
+	this.saveButton = $("<button class='guardarButton'>SAVE</button>");
+	
+	
 	$(this.xSizeCluster).append(this.xSizeLabel).append(this.xSizeInput);
 	$(this.ySizeCluster).append(this.ySizeLabel).append(this.ySizeInput);
 
 	$(this.body).append(this.creationForm);
-	$(this.creationForm).append(this.addDivButton);
-	$(this.creationForm).append(this.nameInput);
-	$(this.creationForm).append(this.xSizeCluster);
-	$(this.creationForm).append(this.ySizeCluster);
-	$(this.creationForm).append(this.checkInside);
-	$(this.creationForm).append(this.clearDiv);
-
+	$(this.creationForm)
+	.append(this.addDivButton)
+	.append(this.saveButton)
+	.append(this.nameInput)
+	.append(this.xSizeCluster)
+	.append(this.ySizeCluster)
+	.append(this.checkInside)
+	.append(this.clearDiv);
+	this.saveButton.click(Cmenu.interactor.saveHtml);
 
 	this.createNewDiv = function(){
 		var name = $(Cmenu.nameInput).val();
@@ -805,12 +811,23 @@ EPR.workingDiv = function(name,dimX,dimY){
 	this.getStatus = function(){
 		var status = {};
 		status.tipo = "desplazamiento";
+		var tempX = div.rotationX.progress();
+		var tempY = div.rotationY.progress();
+		var tempZ = div.rotationZ.progress();	
+
 		status.rotationX = (div.rotationX.progress()-0.5)*360;
 		status.rotationY = (div.rotationY.progress()-0.5)*360;
 		status.rotationZ = (div.rotationZ.progress()-0.5)*360;
+		div.rotationX.progress(0);
+		div.rotationY.progress(0);
+		div.rotationZ.progress(0);
+
 		status.positionZ = (div.positionZ.progress()-0.5)*2000;
 		status.positionX = div.htmlVersion.position().left;
 		status.positionY = div.htmlVersion.position().top;
+		div.rotationX.progress(tempX);
+		div.rotationY.progress(tempY);
+		div.rotationZ.progress(tempZ);
 
 		return status;
 	}
@@ -860,9 +877,140 @@ EPR.workingDiv = function(name,dimX,dimY){
 			return divForm;
 	}
 }
+EPR.fusionFile = function(interactor) {
+	var holeFile = '<!DOCTYPE html> \n'
++'<html lang="es" style="height:100%;width:100%;"> \n'
++'<head> \n'
++'  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n'
++'       <link type="text/css" rel="stylesheet" media="all" href="fonts.css" />\n'
++'       <script src="jquery.js" charset="utf-8"></script>\n'
++'       <script src="rescale.js" charset="utf-8"></script>\n'
++'\n'
++'<style>\n'
++'html {\n'
++'    overflow:hidden;\n'
++'    margin:0;\n'
++'    padding:0; \n'
++'}\n'
++'\n'
++'body {\n'
++'    font-family: blulabs;\n'
++'    color: #000000;\n'
++'    text-align: center;\n'
++'    background-color:white;\n'
++'    height:100%;\n'
++'    width:100%;  \n'
++'    margin:0;\n'
++'    padding:0;\n'
++'}\n'
++'#main {\n'
++'  position: absolute;\n'
++'  width: 100%;\n'
++'  height: 100%;\n'
++'	  perspective:1550px;\n'
++'\n'
++'}\n'
++'ol {margin-left: 0.5em;}\n'
++'\n'
++'ul {margin-left: 0.75em;}\n'
++'.imagen {\n'
++'      background-size: contain;\n'
++'      background-repeat: no-repeat;\n'
++'      background-position: center center ;\n'
++'}\n'
++'.texto {\n'
++'  position: absolute;\n'
++'  overflow: hidden;\n'
++'  font-family: blulabs;\n'
++'  font-width: bold;\n'
++'  font-size: 80px;\n'
++'  color: white;\n'
++'  z-index: 11;\n'
++'  margin: 0px;\n'
++'  padding: 0px;\n'
++'}\n'
++'\n';
+
+for (var i = 0; i < interactor.divCreated.length;i++){
+	var actualDiv = interactor.divCreated[i];
+	var stats = actualDiv.getStatus();
+
+	holeFile += '#'+actualDiv.name+' {\n'
+	+ 'position:absolute;\n'
+	+ 'background-color:red;\n'
+	+ 'top: '+stats.positionY +'px;\n'
+	+ 'left: '+stats.positionX+'px;\n'
+	+ 'width: '+actualDiv.htmlVersion.width()+'px;\n'
+	+ 'height: '+actualDiv.htmlVersion.height()+'px;\n'
+	+' -webkit-transform:rotateZ('+stats.rotationZ+'deg) rotateY('+stats.rotationY+'deg)  rotateX('+stats.rotationX +'deg);\n'
+	+' transform:rotateZ('+stats.rotationZ+'deg) rotateY('+stats.rotationY+'deg)  rotateX('+stats.rotationX +'deg);\n'
+	+' z-index: 0;\n'
+	+'background-image: A RELLENAR url("imgs/{param:estilo}.png");\n'
+	+'}\n';
+}
 
 
-EPR.fusionFile = function(interactor){
+holeFile +='\n'
++'</style>\n'
++'{param:blulabs}\n'
++'<script type="text/javascript">\n'
++'\n'
++'var config = {\n'
++'  width: 1920,\n'
++'  height: 1080,\n'
++'  adjust: true,\n'
++'  perspective: 1000\n'
++'};\n'
++'\n'
++'$(document).ready(function () {\n'
++'\n'
++'var titular = "{param:titular}";\n'
++'\n'
++'$("#titular").append(titular);\n'
++'var req = new XMLHttpRequest();\n'
++'        var url = blunode.logo.url;\n'
++'        req.open("GET", url, false);\n'
++'        try {\n'
++'                req.send();\n'
++'                if (req.status !== 0 && req.status !== 200) {\n'
++'                        url = "logo.png";\n'
++'                }\n'
++'        } catch(e) {\n'
++'                url = "logo.png";\n'
++'        }\n'
++'        $("#logo").css("background-image", "url(' + encodeURI("'") +'" + url + "' + encodeURI("'") +')");\n'
++'});\n'
++'</script>\n'
++'</head>\n';
+
+
+
+
+
+holeFile += '<body>\n'
++'<div id="main">\n'
++'<!--EN CASO DE VIDEO sustituye el div por conservando el id \n'
++'<video class="video-js" id="video" autoplay style="display: block; margin: auto;image-fit: fill;"\n'
++'src="{param:video}"></video> \n'
++' EN CASO DE TEXTO cambia <div> por <pre> y pon la class en "texto" --> \n';
+
+
+for (var i = 0; i < interactor.divCreated.length;i++){
+	var actualDiv = interactor.divCreated[i];
+	holeFile += '\t<div id="'+actualDiv.name+'" class="RELLENAR"></div>\n';
+}
+ 
+holeFile += '</div>\n'
++'</body>\n'
++'</html>\n';
+
+
+
+
+return holeFile;
+}
+
+EPR.fusionFileOld = function(interactor){
 	
 	var holeFile = '<html><head>\n'+
        '<title>Plantilla</title>\n'+

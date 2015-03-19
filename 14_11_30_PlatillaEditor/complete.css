@@ -442,18 +442,38 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0b7a1', end
 }
 .crearButton{
   position:relative;
-  width: 90%;
+  float:left;
+  width: 60%;
   left:5%;
   margin-bottom: 10px;
   height: 40px;
   font-size: 18px;
   border-radius: 10px;
-   background: -moz-linear-gradient(top, #ea8125 3%, #ea2803 12%, #ff6600 73%, #c72200 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,#ea8125), color-stop(12%,#ea2803), color-stop(73%,#ff6600), color-stop(100%,#c72200)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top, #ea8125 3%,#ea2803 12%,#ff6600 73%,#c72200 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top, #ea8125 3%,#ea2803 12%,#ff6600 73%,#c72200 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top, #ea8125 3%,#ea2803 12%,#ff6600 73%,#c72200 100%); /* IE10+ */
-background: linear-gradient(to bottom, #ea8125 3%,#ea2803 12%,#ff6600 73%,#c72200 100%); /* W3C */
+     background: -moz-linear-gradient(top, #ea8125 3%, #ea2803 12%, #ff6600 73%, #c72200 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,#ea8125), color-stop(12%,#ea2803), color-stop(73%,#ff6600), color-stop(100%,#c72200)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #ea8125 3%,#ea2803 12%,#ff6600 73%,#c72200 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #ea8125 3%,#ea2803 12%,#ff6600 73%,#c72200 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #ea8125 3%,#ea2803 12%,#ff6600 73%,#c72200 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #ea8125 3%,#ea2803 12%,#ff6600 73%,#c72200 100%); /* W3C */
+}
+
+.guardarButton{
+ position:relative;
+  width: 30%;
+  left:5%;
+  float:left;
+  margin-left: 5%;
+  margin-bottom: 10px;
+  height: 40px;
+  font-size: 18px;
+  border-radius: 10px;
+background: -moz-linear-gradient(top, #c0ef26 3%, #058902 12%, #00fc10 73%, #0ba500 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,#c0ef26), color-stop(12%,#058902), color-stop(73%,#00fc10), color-stop(100%,#0ba500)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #c0ef26 3%,#058902 12%,#00fc10 73%,#0ba500 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #c0ef26 3%,#058902 12%,#00fc10 73%,#0ba500 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #c0ef26 3%,#058902 12%,#00fc10 73%,#0ba500 100%); /* IE10+ */
+background: linear-gradient(to bottom, #c0ef26 3%,#058902 12%,#00fc10 73%,#0ba500 100%); /* W3C */
+
 }
 
 .crearName{
