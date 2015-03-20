@@ -882,9 +882,13 @@ EPR.fusionFile = function(interactor) {
 +'<html lang="es" style="height:100%;width:100%;"> \n'
 +'<head> \n'
 +'  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n'
-+'       <link type="text/css" rel="stylesheet" media="all" href="fonts.css" />\n'
-+'       <script src="jquery.js" charset="utf-8"></script>\n'
-+'       <script src="rescale.js" charset="utf-8"></script>\n'
++'       <link type="text/css" rel="stylesheet" media="all" href="libs/fonts.css" />\n'
++'       <script src="libs/jquery.js" charset="utf-8"></script>\n'
++'       <script src="libs/rescale.js" charset="utf-8"></script>\n'
++' 		 <script type="text/javascript" src="libs/TweenMax.min.js"></script>\n'
++'	     <script type="text/javascript" src="libs/SplitText.min.js"></script>\n'
++'	     <script type="text/javascript" src="libs/ScrambleTextPlugin.min.js"></script>\n'
++'	     <script type="text/javascript"  src="libs/ARM.js" charset="utf-8"></script>\n'
 +'\n'
 +'<style>\n'
 +'html {\n'
@@ -964,6 +968,13 @@ holeFile +='\n'
 +'\n'
 +'$(document).ready(function () {\n'
 +'\n'
++'\n'
++'var tl  = new TimelineMax();\n'
++'//formato   \n'
++'//tl.add(ARM.[Tipo1].[Tipo2].[NombreAnimacion]("[identificador del elemento]",[duracion de la animacion]),[segundo en el que empieza la animacion]);\n'
++'//ejemplo\n'
++'//tl.add(ARM.Container.In.haltLeftSkew("div_number_1",4),0);\n'
++'\n'
 +'var titular = "{param:titular}";\n'
 +'\n'
 +'$("#titular").append(titular);\n'
@@ -997,7 +1008,7 @@ holeFile += '<body>\n'
 
 for (var i = 0; i < interactor.divCreated.length;i++){
 	var actualDiv = interactor.divCreated[i];
-	holeFile += '\t<div id="'+actualDiv.name+'" class="RELLENAR"></div>\n';
+	holeFile += '\t<div id="'+actualDiv.name+'" class="imagen"></div>\n';
 }
  
 holeFile += '</div>\n'
